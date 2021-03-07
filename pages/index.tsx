@@ -1,31 +1,12 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Card from "../components/Card";
-import { CardDetail, cardEmpty, CardSet } from "../components/CauldronTypes";
 import { useState } from "react";
+import { CardDetail, cardEmpty } from "../types/CardDetail";
+import { CardSetDetail } from "../types/CardSetDetail";
 
 const Home: React.FC = () => {
-  const saveJson = (filename: string, jsonSource: {}) => {
-    const json = JSON.stringify(jsonSource);
-
-    const element = document.createElement("a");
-    element.setAttribute(
-      "href",
-      "data:application/json;charset=utf-8," + encodeURIComponent(json)
-    );
-    element.setAttribute("download", filename);
-
-    element.style.display = "none";
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
-  };
-
   const filename = "cardset.json";
-
-  const downloadCardSet = (cardset: CardSet) => saveJson(filename, cardset);
 
   const newCard = (index: number) => {
     const newCard = cardEmpty();
@@ -38,11 +19,7 @@ const Home: React.FC = () => {
   const [cardset, setCardset] = useState({
     name: "",
     cards: [newCard(cardIndex)],
-  } as CardSet);
-
-  const handleCardSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCardIndex(Number(e.target.value));
-  };
+  } as CardSetDetail);
 
   const handleCardChange = (newValue: Partial<CardDetail>) => {
     console.log(newValue);
@@ -56,52 +33,131 @@ const Home: React.FC = () => {
     });
   };
 
-  const handleAddCardButtonClick = () => {
-    setCardset((oldCardset) => {
-      return {
-        ...oldCardset,
-        cards: [...oldCardset.cards, newCard(cardset.cards.length)],
+  const CardsetNameInput = () => {
+    const handleCardsetNameChange = (
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      setCardset((prev) => {
+        return { ...prev, name: e.target.value };
+      });
+    };
+
+    return (
+      <input
+        type="text"
+        value={cardset.name}
+        onChange={handleCardsetNameChange}
+      />
+    );
+  };
+
+  const CardSelect = () => {
+    const handleCardSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setCardIndex(Number(e.target.value));
+    };
+
+    return (
+      <select value={cardIndex} onChange={handleCardSelect}>
+        {cardset.cards.map((elm, index) => (
+          <option key={index} value={index}>
+            {elm.name}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const AddCardButton = () => {
+    const handleAddCardButtonClick = () => {
+      setCardset((oldCardset) => {
+        return {
+          ...oldCardset,
+          cards: [...oldCardset.cards, newCard(cardset.cards.length)],
+        };
+      });
+
+      // 追加したカードを選択する
+      setCardIndex(cardset.cards.length);
+    };
+
+    return <button onClick={handleAddCardButtonClick}>+</button>;
+  };
+
+  const DeleteCardButton = () => {
+    const handleDeleteCardButtonClick = () => {
+      if (cardset.cards.length === 1) {
+        return;
+      }
+
+      const deleteIndex = cardIndex;
+
+      if (deleteIndex === cardset.cards.length - 1) {
+        setCardIndex(deleteIndex - 1);
+      }
+
+      setCardset((oldCardset) => {
+        const newCardset = [...oldCardset.cards];
+        newCardset.splice(deleteIndex, 1);
+
+        return { ...oldCardset, cards: newCardset };
+      });
+    };
+
+    return <button onClick={handleDeleteCardButtonClick}>-</button>;
+  };
+  const DownloadButton = () => {
+    const saveJson = (filename: string, jsonSource: {}) => {
+      const json = JSON.stringify(jsonSource);
+
+      const element = document.createElement("a");
+      element.setAttribute(
+        "href",
+        "data:application/json;charset=utf-8," + encodeURIComponent(json)
+      );
+      element.setAttribute("download", filename);
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    };
+
+    const downloadCardSet = (cardset: CardSetDetail) =>
+      saveJson(filename, cardset);
+
+    return (
+      <button onClick={() => downloadCardSet(cardset)}>ダウンロード</button>
+    );
+  };
+
+  const LoadCardsetButton = () => {
+    const handleChangeLoadCardset = (
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      if (!e.target.files || e.target.files.length === 0) {
+        return;
+      }
+
+      const cardsetFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const json = e.target?.result;
+        if (typeof json !== "string") {
+          return;
+        }
+
+        console.log(json);
+
+        const cardset = JSON.parse(json);
+        setCardset(cardset);
       };
-    });
+      reader.readAsText(cardsetFile);
+    };
 
-    // 追加したカードを選択する
-    setCardIndex(cardset.cards.length);
+    return <input type="file" onChange={handleChangeLoadCardset} />;
   };
-
-  const handleDeleteCardButtonClick = () => {
-    if (cardset.cards.length === 1) {
-      return;
-    }
-
-    const deleteIndex = cardIndex;
-
-    if (deleteIndex === cardset.cards.length - 1) {
-      setCardIndex(deleteIndex - 1);
-    }
-
-    setCardset((oldCardset) => {
-      const newCardset = [...oldCardset.cards];
-      newCardset.splice(deleteIndex, 1);
-
-      return { ...oldCardset, cards: newCardset };
-    });
-  };
-
-  const handleCardsetNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCardset((prev) => {
-      return { ...prev, name: e.target.value };
-    });
-  };
-
-  const AddCardButton = () => (
-    <button onClick={handleAddCardButtonClick}>+</button>
-  );
-  const DeleteCardButton = () => (
-    <button onClick={handleDeleteCardButtonClick}>-</button>
-  );
-  const DownloadButton = () => (
-    <button onClick={() => downloadCardSet(cardset)}>ダウンロード</button>
-  );
 
   return (
     <div className={styles.container}>
@@ -113,21 +169,14 @@ const Home: React.FC = () => {
       <main className={styles.main}>
         <h1 className={styles.title}>Cauldron - カード作成ツール</h1>
         <span>
-          <input
-            type="text"
-            value={cardset.name}
-            onChange={handleCardsetNameChange}
-          />
-          <select value={cardIndex} onChange={handleCardSelect}>
-            {cardset.cards.map((elm, index) => (
-              <option key={index} value={index}>
-                {elm.name}
-              </option>
-            ))}
-          </select>
+          <DownloadButton></DownloadButton>
+          <LoadCardsetButton></LoadCardsetButton>
+        </span>
+        <span>
+          <CardsetNameInput></CardsetNameInput>
+          <CardSelect></CardSelect>
           <AddCardButton></AddCardButton>
           <DeleteCardButton></DeleteCardButton>
-          <DownloadButton></DownloadButton>
         </span>
         <Card
           detail={cardset.cards[cardIndex]}

@@ -1,5 +1,5 @@
+import { CardEffectActionDamageDetail } from "../types/CardEffectActionDamageDetail";
 import Choice from "./Choice";
-import { CardEffectActionDamageDetail } from "./CauldronTypes";
 
 interface Props {
   detail: CardEffectActionDamageDetail;

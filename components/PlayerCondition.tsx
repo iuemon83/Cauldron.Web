@@ -1,8 +1,8 @@
 import {
-  PlayerConditionDetail,
   playerConditionContexts,
+  PlayerConditionDetail,
   playerConditionTypes,
-} from "./CauldronTypes";
+} from "../types/PlayerConditionDetail";
 
 interface Props {
   detail: PlayerConditionDetail;

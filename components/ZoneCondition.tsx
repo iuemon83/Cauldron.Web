@@ -1,4 +1,4 @@
-import { ZoneConditionDetail } from "./CauldronTypes";
+import { ZoneConditionDetail } from "../types/ZoneConditionDetail";
 import ZoneValue from "./ZoneValue";
 
 interface Props {

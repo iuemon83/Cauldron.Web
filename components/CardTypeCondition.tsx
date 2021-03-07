@@ -1,4 +1,5 @@
-import { CardTypeConditionDetail, cardTypes } from "./CauldronTypes";
+import { cardTypes } from "../types/CardDetail";
+import { CardTypeConditionDetail } from "../types/CardTypeConditionDetail";
 
 interface Props {
   detail: CardTypeConditionDetail;

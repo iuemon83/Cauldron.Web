@@ -1,12 +1,7 @@
 import React from "react";
+import { cardAbilities, CardDetail, cardTypes } from "../types/CardDetail";
+import { CardEffectDetail, cardEffectEmpty } from "../types/CardEffectDetail";
 import CardEffect from "./CardEffect";
-import {
-  cardAbilities,
-  CardDetail,
-  CardEffectDetail,
-  cardEffectEmpty,
-  cardTypes,
-} from "./CauldronTypes";
 
 interface Props {
   detail: CardDetail;
@@ -146,11 +141,56 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
             <input
               type="checkbox"
               value={index}
+              checked={detail.abilities.indexOf(e) !== -1}
               onChange={handleAbilityChange}
             />
             {e}
           </label>
         ))}
+      </div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={detail.numTurnsToCanAttack !== undefined}
+            onChange={(e) =>
+              onChanged({
+                numTurnsToCanAttack: e.target.checked ? 0 : undefined,
+              })
+            }
+          />
+          攻撃可能となるまでのターン数:
+        </label>
+        {detail.numTurnsToCanAttack !== undefined && (
+          <input
+            type="number"
+            value={detail.numTurnsToCanAttack}
+            onChange={(e) => onChanged({ cost: Number(e.target.value) })}
+          />
+        )}
+      </div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={detail.numAttacksLimitInTurn !== undefined}
+            onChange={(e) =>
+              onChanged({
+                numAttacksLimitInTurn: e.target.checked ? 0 : undefined,
+              })
+            }
+          />
+          1ターン中に攻撃可能な回数:
+        </label>
+        {detail.numAttacksLimitInTurn !== undefined && (
+          <input
+            type="number"
+            value={detail.numAttacksLimitInTurn}
+            onChange={(e) =>
+              onChanged({ numAttacksLimitInTurn: Number(e.target.value) })
+            }
+          />
+        )}
       </div>
 
       <h2>

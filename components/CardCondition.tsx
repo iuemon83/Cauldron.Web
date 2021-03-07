@@ -1,16 +1,13 @@
-import { useState } from "react";
-import CardTypeCondition from "./CardTypeCondition";
 import {
-  CardConditionDetail,
-  cardConditionTypes,
   cardConditionContexts,
-  CardTypeConditionDetail,
-  ZoneConditionDetail,
-  zoneConditionEmpty,
-  cardTypeConditionEmpty,
-  numConditionEmpty,
-  textConditionEmpty,
-} from "./CauldronTypes";
+  CardConditionDetail,
+} from "../types/CardConditionDetail";
+import { cardTypeConditionEmpty } from "../types/CardTypeConditionDetail";
+import { numConditionEmpty } from "../types/NumConditionDetail";
+import { textConditionEmpty } from "../types/TextConditionDetail";
+import { zoneConditionEmpty } from "../types/ZoneConditionDetail";
+import CardTypeCondition from "./CardTypeCondition";
+
 import NumCondition from "./NumCondition";
 import TextCondition from "./TextCondition";
 import ZoneCondition from "./ZoneCondition";
@@ -21,21 +18,12 @@ interface Props {
 }
 
 const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const [hasCostCondition, setHasCostCondition] = useState(false);
-  const [hasNameCondition, setHasNameCondition] = useState(false);
-  const [hasPowerCondition, setHasPowerCondition] = useState(false);
-  const [hasToughnesstCondition, setHasToughnessCondition] = useState(false);
-  const [hasTypeCondition, setHasTypeCondition] = useState(false);
-  const [hasZoneCondition, setHasZoneCondition] = useState(false);
-
   const handleHasCostConditionChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newValue = e.target.checked ? numConditionEmpty() : undefined;
 
     onChanged({ costCondition: newValue });
-
-    setHasCostCondition(e.target.checked);
   };
 
   const handleHasNameConditionChange = (
@@ -44,8 +32,6 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
     const newValue = e.target.checked ? textConditionEmpty() : undefined;
 
     onChanged({ nameCondition: newValue });
-
-    setHasNameCondition(e.target.checked);
   };
 
   const handleHasPowerConditionChange = (
@@ -54,8 +40,6 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
     const newValue = e.target.checked ? numConditionEmpty() : undefined;
 
     onChanged({ powerCondition: newValue });
-
-    setHasPowerCondition(e.target.checked);
   };
 
   const handleHasToughnessConditionChange = (
@@ -64,8 +48,6 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
     const newValue = e.target.checked ? numConditionEmpty() : undefined;
 
     onChanged({ toughnessCondition: newValue });
-
-    setHasToughnessCondition(e.target.checked);
   };
 
   const handleHasTypeConditionChange = (
@@ -74,24 +56,20 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
     const newValue = e.target.checked ? cardTypeConditionEmpty() : undefined;
 
     onChanged({ typeCondition: newValue });
-
-    setHasTypeCondition(e.target.checked);
   };
 
-  const handleHasZoneConditionChange = (
+  const handleChangeHasZoneCondition = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newValue = e.target.checked ? zoneConditionEmpty() : undefined;
 
     onChanged({ zoneCondition: newValue });
-
-    setHasZoneCondition(e.target.checked);
   };
 
   return (
     <>
       <div>
-        <label>condition context</label>
+        <label>condition context:</label>
         <select
           value={cardConditionContexts.indexOf(detail.context)}
           onChange={(e) =>
@@ -108,28 +86,11 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
         </select>
       </div>
       <div>
-        <label>condition type</label>
-        <select
-          value={cardConditionTypes.indexOf(detail.type)}
-          onChange={(e) =>
-            onChanged({
-              type: cardConditionTypes[Number(e.target.value)],
-            })
-          }
-        >
-          {cardConditionTypes.map((e, index) => (
-            <option key={index} value={index}>
-              {e}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
         <h3>
           <label>
             <input
               type="checkbox"
-              checked={hasCostCondition}
+              checked={detail.costCondition !== undefined}
               onChange={handleHasCostConditionChange}
             />
             コストの条件
@@ -154,7 +115,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasNameCondition}
+              checked={detail.nameCondition !== undefined}
               onChange={handleHasNameConditionChange}
             />
             名前の条件
@@ -179,7 +140,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasPowerCondition}
+              checked={detail.powerCondition !== undefined}
               onChange={handleHasPowerConditionChange}
             />
             パワーの条件
@@ -204,7 +165,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasToughnesstCondition}
+              checked={detail.toughnessCondition !== undefined}
               onChange={handleHasToughnessConditionChange}
             />
             タフネスの条件
@@ -229,7 +190,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasTypeCondition}
+              checked={detail.typeCondition !== undefined}
               onChange={handleHasTypeConditionChange}
             />
             カードタイプの条件
@@ -256,8 +217,8 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasZoneCondition}
-              onChange={handleHasZoneConditionChange}
+              checked={detail.zoneCondition !== undefined}
+              onChange={handleChangeHasZoneCondition}
             />
             領域の条件
           </label>

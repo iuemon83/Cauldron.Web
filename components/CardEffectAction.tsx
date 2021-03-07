@@ -1,11 +1,11 @@
 import { useState } from "react";
-import CardEffectActionDamage from "./CardEffectActionDamage";
 import {
-  CardEffectActionDetail,
   CardEffectActionDamageDetail,
-  choiceEmpty,
   CardEffectActionDamageEmpty,
-} from "./CauldronTypes";
+} from "../types/CardEffectActionDamageDetail";
+import { CardEffectActionDetail } from "../types/CardEffectActionDetail";
+import { choiceEmpty } from "../types/ChoiceDetail";
+import CardEffectActionDamage from "./CardEffectActionDamage";
 
 interface Props {
   detail: CardEffectActionDetail;

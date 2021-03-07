@@ -1,4 +1,8 @@
-import { textCompares, TextConditionDetail } from "./CauldronTypes";
+import {
+  textCompares,
+  TextConditionDetail,
+} from "../types/TextConditionDetail";
+import TextValue from "./TextValue";
 
 interface Props {
   detail: TextConditionDetail;
@@ -8,14 +12,10 @@ interface Props {
 const TextCondition: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
-      <div>
-        <label>値</label>
-        <input
-          type="number"
-          value={detail.value}
-          onChange={(e) => onChanged({ value: e.target.value })}
-        ></input>
-      </div>
+      <TextValue
+        detail={detail.value}
+        onChanged={(x) => onChanged({ value: { ...detail.value, ...x } })}
+      ></TextValue>
       <div>
         <label>比較方法</label>
         <select

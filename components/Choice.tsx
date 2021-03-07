@@ -1,11 +1,8 @@
-import { useState } from "react";
+import { cardConditionEmpty } from "../types/CardConditionDetail";
+import { ChoiceDetail, howList } from "../types/ChoiceDetail";
+import { playerConditionEmpty } from "../types/PlayerConditionDetail";
 import CardCondition from "./CardCondition";
-import {
-  cardConditionEmpty,
-  ChoiceDetail,
-  howList,
-  playerConditionEmpty,
-} from "./CauldronTypes";
+
 import PlayerCondition from "./PlayerCondition";
 
 interface Props {
@@ -14,9 +11,6 @@ interface Props {
 }
 
 const Choice: React.FC<Props> = ({ detail, onChanged }) => {
-  const [hasPlayerCondition, setHasPlayerCondition] = useState(false);
-  const [hasCardCondition, setHasCardCondition] = useState(false);
-
   const playerCondition = () => {
     if (!detail.playerCondition) {
       return null;
@@ -67,7 +61,6 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
     const newValue = e.target.checked ? playerConditionEmpty() : undefined;
 
     onChanged({ playerCondition: newValue });
-    setHasPlayerCondition(e.target.checked);
   };
 
   const handleHasCardConditionChange = (
@@ -76,7 +69,6 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
     const newValue = e.target.checked ? cardConditionEmpty() : undefined;
 
     onChanged({ cardCondition: newValue });
-    setHasCardCondition(e.target.checked);
   };
 
   return (
@@ -113,7 +105,7 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasPlayerCondition}
+              checked={detail.playerCondition !== undefined}
               onChange={handleHasPlayerConditionChange}
             ></input>
             プレイヤーの選択条件
@@ -126,7 +118,7 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasCardCondition}
+              checked={detail.cardCondition !== undefined}
               onChange={handleHasCardConditionChange}
             ></input>
             カードの選択条件

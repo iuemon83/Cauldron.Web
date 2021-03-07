@@ -1,4 +1,4 @@
-import { numCompares, NumConditionDetail } from "./CauldronTypes";
+import { numCompares, NumConditionDetail } from "../types/NumConditionDetail";
 
 interface Props {
   detail: NumConditionDetail;

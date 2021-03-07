@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { choiceEmpty, zoneNames, ZoneValueDetail } from "./CauldronTypes";
+import { choiceEmpty } from "../types/ChoiceDetail";
+import { zoneNames, ZoneValueDetail } from "../types/ZoneValueDetail";
 import Choice from "./Choice";
 
 interface Props {
@@ -10,10 +11,12 @@ interface Props {
 const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
   const [isDynamicValue, setIsDynamicValue] = useState(false);
 
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const index = Number(e.target.value);
+  const handleValueChange = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
+    const index = Number(e.currentTarget.value);
 
-    if (e.target.checked) {
+    if (e.currentTarget.checked) {
       const newlist = [...detail.pureValue, zoneNames[index]];
 
       onChanged({ pureValue: newlist });
@@ -30,7 +33,13 @@ const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
         値:
         {zoneNames.map((e, index) => (
           <label key={index}>
-            <input type="checkbox" value={index} onChange={handleValueChange} />
+            <input
+              type="checkbox"
+              readOnly
+              value={index}
+              checked={detail.pureValue.indexOf(e) !== -1}
+              onClick={handleValueChange}
+            />
             {e}
           </label>
         ))}
