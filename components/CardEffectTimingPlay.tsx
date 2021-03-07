@@ -8,7 +8,7 @@ interface Props {
   onChanged: (newValue: Partial<CardEffectTimingPlayEventDetail>) => void;
 }
 
-const CardEffectTimingPlayEvent: React.FC<Props> = ({ detail, onChanged }) => {
+const CardEffectTimingPlay: React.FC<Props> = ({ detail, onChanged }) => {
   const handleChangeEventSource = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = Number(e.target.value);
 
@@ -36,4 +36,4 @@ const CardEffectTimingPlayEvent: React.FC<Props> = ({ detail, onChanged }) => {
   );
 };
 
-export default CardEffectTimingPlayEvent;
+export default CardEffectTimingPlay;

@@ -31,14 +31,21 @@ const CardEffect: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <CardEffectCondition
-        detail={detail.condition}
-        onChanged={handleChangeCardEffectCondition}
-      ></CardEffectCondition>
-      <CardEffectAction
-        detail={detail.actions[0]}
-        onChanged={handleCardEffectActionChange}
-      ></CardEffectAction>
+      <fieldset>
+        <legend>条件</legend>
+        <CardEffectCondition
+          detail={detail.condition}
+          onChanged={handleChangeCardEffectCondition}
+        ></CardEffectCondition>
+      </fieldset>
+
+      <fieldset>
+        <legend>アクション</legend>
+        <CardEffectAction
+          detail={detail.actions[0]}
+          onChanged={handleCardEffectActionChange}
+        ></CardEffectAction>
+      </fieldset>
     </>
   );
 };

@@ -85,8 +85,8 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
           ))}
         </select>
       </div>
-      <div>
-        <h3>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -95,7 +95,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             />
             コストの条件
           </label>
-        </h3>
+        </legend>
         {detail.costCondition && (
           <NumCondition
             detail={detail.costCondition}
@@ -109,9 +109,9 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             }
           ></NumCondition>
         )}
-      </div>
-      <div>
-        <h3>
+      </fieldset>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -120,7 +120,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             />
             名前の条件
           </label>
-        </h3>
+        </legend>
         {detail.nameCondition && (
           <TextCondition
             detail={detail.nameCondition}
@@ -134,9 +134,9 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             }
           ></TextCondition>
         )}
-      </div>
-      <div>
-        <h3>
+      </fieldset>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -145,7 +145,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             />
             パワーの条件
           </label>
-        </h3>
+        </legend>
         {detail.powerCondition && (
           <NumCondition
             detail={detail.powerCondition}
@@ -159,9 +159,9 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             }
           ></NumCondition>
         )}
-      </div>
-      <div>
-        <h3>
+      </fieldset>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -170,7 +170,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             />
             タフネスの条件
           </label>
-        </h3>
+        </legend>
         {detail.toughnessCondition && (
           <NumCondition
             detail={detail.toughnessCondition}
@@ -184,9 +184,9 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             }
           ></NumCondition>
         )}
-      </div>
-      <div>
-        <h3>
+      </fieldset>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -195,7 +195,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             />
             カードタイプの条件
           </label>
-        </h3>
+        </legend>
         {detail.typeCondition && (
           <section>
             <CardTypeCondition
@@ -211,9 +211,9 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             ></CardTypeCondition>
           </section>
         )}
-      </div>
-      <div>
-        <h3>
+      </fieldset>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -222,7 +222,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             />
             領域の条件
           </label>
-        </h3>
+        </legend>
         {detail.zoneCondition && (
           <section>
             <ZoneCondition
@@ -238,7 +238,7 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
             ></ZoneCondition>
           </section>
         )}
-      </div>
+      </fieldset>
     </>
   );
 };

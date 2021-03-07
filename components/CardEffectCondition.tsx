@@ -26,21 +26,6 @@ const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
 
     return (
       <>
-        <label>
-          領域:
-          <select
-            value={zoneNames.indexOf(detail.zonePrettyName)}
-            onChange={(e) =>
-              onChanged({ zonePrettyName: zoneNames[Number(e.target.value)] })
-            }
-          >
-            {zoneNames.map((e, index) => (
-              <option key={index} value={index}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </label>
         <CardEffectWhen
           detail={detail.when}
           onChanged={(x) =>
@@ -59,18 +44,35 @@ const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
       <div>
-        <h3>
+        <label>
+          領域:
+          <select
+            value={zoneNames.indexOf(detail.zonePrettyName)}
+            onChange={(e) =>
+              onChanged({ zonePrettyName: zoneNames[Number(e.target.value)] })
+            }
+          >
+            {zoneNames.map((e, index) => (
+              <option key={index} value={index}>
+                {e}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
               checked={hasWhen}
               onChange={handleChangeEffectWhen}
             ></input>
-            when
+            いつ
           </label>
-        </h3>
-      </div>
-      {when()}
+        </legend>
+        {when()}
+      </fieldset>
     </>
   );
 };

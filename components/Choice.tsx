@@ -100,8 +100,8 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
           ></input>
         </label>
       </div>
-      <div>
-        <h3>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -110,11 +110,11 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
             ></input>
             プレイヤーの選択条件
           </label>
-        </h3>
-      </div>
-      {playerCondition()}
-      <div>
-        <h3>
+        </legend>
+        {playerCondition()}
+      </fieldset>
+      <fieldset>
+        <legend>
           <label>
             <input
               type="checkbox"
@@ -123,9 +123,9 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
             ></input>
             カードの選択条件
           </label>
-        </h3>
-      </div>
-      {cardCondition()}
+        </legend>
+        {cardCondition()}
+      </fieldset>
     </>
   );
 };

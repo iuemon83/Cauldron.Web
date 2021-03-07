@@ -199,13 +199,13 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
         <button onClick={() => clearCardEffect()}>clear</button>
       </h2>
       {detail.effects.map((e, index) => (
-        <div key={index}>
+        <fieldset key={index}>
           <button onClick={() => removeCardEffect(index)}>-</button>
           <CardEffect
             detail={e}
             onChanged={(x) => onCardEffectChanged({ ...e, ...x }, index)}
           ></CardEffect>
-        </div>
+        </fieldset>
       ))}
     </section>
   );
