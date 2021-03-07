@@ -12,3 +12,10 @@ export const zoneNames = [
   "opponentField",
 ] as const;
 export type ZoneName = typeof zoneNames[number];
+
+export const zoneValueEmpty = (): ZoneValueDetail => {
+  return {
+    pureValue: [],
+    choice: undefined,
+  };
+};

@@ -33,24 +33,6 @@ const Home: React.FC = () => {
     });
   };
 
-  const CardsetNameInput = () => {
-    const handleCardsetNameChange = (
-      e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      setCardset((prev) => {
-        return { ...prev, name: e.target.value };
-      });
-    };
-
-    return (
-      <input
-        type="text"
-        value={cardset.name}
-        onChange={handleCardsetNameChange}
-      />
-    );
-  };
-
   const CardSelect = () => {
     const handleCardSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setCardIndex(Number(e.target.value));
@@ -173,7 +155,11 @@ const Home: React.FC = () => {
           <LoadCardsetButton></LoadCardsetButton>
         </span>
         <span>
-          <CardsetNameInput></CardsetNameInput>
+          <input
+            type="text"
+            value={cardset.name}
+            onChange={(e) => setCardset({ ...cardset, name: e.target.value })}
+          />
           <CardSelect></CardSelect>
           <AddCardButton></AddCardButton>
           <DeleteCardButton></DeleteCardButton>

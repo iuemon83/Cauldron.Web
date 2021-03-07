@@ -10,13 +10,10 @@ interface Props {
 }
 
 const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const [hasWhen, setHasWhen] = useState(false);
-
   const handleChangeEffectWhen = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.checked ? CardEffectWhenEmpty() : undefined;
 
     onChanged({ when: newValue });
-    setHasWhen(e.target.checked);
   };
 
   const when = () => {
@@ -65,7 +62,7 @@ const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
           <label>
             <input
               type="checkbox"
-              checked={hasWhen}
+              checked={detail.when !== undefined}
               onChange={handleChangeEffectWhen}
             ></input>
             いつ
