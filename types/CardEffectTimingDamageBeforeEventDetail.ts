@@ -10,7 +10,7 @@ export type CardEffectTimingDamageBeforeEventDetail = {
 
 export type EventSource = string;
 
-export const CardEffectTimingDamageBeforeEventEmpty = (): CardEffectTimingDamageBeforeEventDetail => {
+export const cardEffectTimingDamageBeforeEventEmpty = (): CardEffectTimingDamageBeforeEventDetail => {
   return {
     source: globalCache.metadata!.effectTimingDamageBeforeEventSources[0],
     playerCondition: undefined,

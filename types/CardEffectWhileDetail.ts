@@ -1,6 +1,6 @@
 import {
   CardEffectTimingDetail,
-  CardEffectTimingEmpty,
+  cardEffectTimingEmpty,
 } from "./CardEffectTimingDetail";
 
 export type CardEffectWhileDetail = {
@@ -13,6 +13,6 @@ export const CardEffectWhileEmpty = (): CardEffectWhileDetail => {
   return {
     skip: 0,
     take: 0,
-    timing: CardEffectTimingEmpty(),
+    timing: cardEffectTimingEmpty(),
   };
 };

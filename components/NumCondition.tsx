@@ -1,5 +1,7 @@
 import { NumConditionDetail } from "../types/NumConditionDetail";
 import { globalCache } from "./CauldronApi";
+import InputNumber from "./input/InputNumber";
+import InputSelect from "./input/InputSelect";
 
 interface Props {
   detail: NumConditionDetail;
@@ -11,29 +13,18 @@ const NumCondition: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <div>
-        <label>値</label>
-        <input
-          type="number"
-          value={detail.value}
-          onChange={(e) => onChanged({ value: Number(e.target.value) })}
-        ></input>
-      </div>
-      <div>
-        <label>比較方法</label>
-        <select
-          value={numCompares.indexOf(detail.compare)}
-          onChange={(e) =>
-            onChanged({ compare: numCompares[Number(e.target.value)] })
-          }
-        >
-          {numCompares.map((elm, index) => (
-            <option key={index} value={index}>
-              {elm}
-            </option>
-          ))}
-        </select>
-      </div>
+      <InputNumber
+        label="値"
+        keyName="value"
+        detail={detail}
+        onChanged={onChanged}
+      />
+      <InputSelect
+        label="比較方法"
+        values={numCompares}
+        value={detail.compare}
+        onChanged={onChanged}
+      />
       <div>
         <label>not</label>
         <input

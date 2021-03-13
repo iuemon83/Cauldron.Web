@@ -14,7 +14,7 @@ export type CardEffectTimingDetail = {
   damageBefore: CardEffectTimingDamageBeforeEventDetail | undefined;
 };
 
-export const CardEffectTimingEmpty = (): CardEffectTimingDetail => {
+export const cardEffectTimingEmpty = (): CardEffectTimingDetail => {
   return {
     startTurn: undefined,
     endTurn: undefined,

@@ -2,6 +2,8 @@ import { CardEffectConditionDetail } from "../types/CardEffectConditionDetail";
 import { CardEffectWhenEmpty } from "../types/CardEffectWhenDetail";
 import CardEffectWhen from "./CardEffectWhen";
 import { globalCache } from "./CauldronApi";
+import InputOption from "./input/InputOption";
+import InputSelect from "./input/InputSelect";
 
 interface Props {
   detail: CardEffectConditionDetail;
@@ -11,66 +13,24 @@ interface Props {
 const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
   const zoneNames = globalCache.metadata!.zoneNames;
 
-  const handleChangeEffectWhen = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.checked ? CardEffectWhenEmpty() : undefined;
-
-    onChanged({ when: newValue });
-  };
-
-  const when = () => {
-    if (!detail.when) {
-      return null;
-    }
-
-    return (
-      <>
-        <CardEffectWhen
-          detail={detail.when}
-          onChanged={(x) =>
-            onChanged({
-              when: {
-                ...(detail.when ?? CardEffectWhenEmpty()),
-                ...x,
-              },
-            })
-          }
-        ></CardEffectWhen>
-      </>
-    );
-  };
-
   return (
     <>
-      <div>
-        <label>
-          領域:
-          <select
-            value={zoneNames.indexOf(detail.zonePrettyName)}
-            onChange={(e) =>
-              onChanged({ zonePrettyName: zoneNames[Number(e.target.value)] })
-            }
-          >
-            {zoneNames.map((e, index) => (
-              <option key={index} value={index}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <fieldset>
-        <legend>
-          <label>
-            <input
-              type="checkbox"
-              checked={detail.when !== undefined}
-              onChange={handleChangeEffectWhen}
-            ></input>
-            いつ
-          </label>
-        </legend>
-        {when()}
-      </fieldset>
+      <InputSelect
+        label="領域"
+        values={zoneNames}
+        value={detail.zonePrettyName}
+        onChanged={onChanged}
+      />
+      <InputOption
+        label="いつ"
+        detail={detail}
+        keyName="when"
+        empty={CardEffectWhenEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <CardEffectWhen detail={d!} onChanged={h}></CardEffectWhen>
+        )}
+      />
     </>
   );
 };

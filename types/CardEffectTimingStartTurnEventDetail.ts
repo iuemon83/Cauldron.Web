@@ -6,7 +6,7 @@ export type CardEffectTimingStartTurnEventDetail = {
 
 export type EventSource = string;
 
-export const CardEffectTimingStartTurnEventEmpty = (): CardEffectTimingStartTurnEventDetail => {
+export const cardEffectTimingStartTurnEventEmpty = (): CardEffectTimingStartTurnEventDetail => {
   return {
     source: globalCache.metadata!.effectTimingStartTurnEventSources[0],
   };

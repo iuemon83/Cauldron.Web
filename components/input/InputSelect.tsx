@@ -1,15 +1,27 @@
-interface Props {
+interface Props<T> {
   label: string;
-  values: any[];
-  value: any;
-  onChange: (e: any) => void;
+  values: T[];
+  value: T;
+  onChanged: (e: any) => void;
 }
 
-const InputSelect: React.FC<Props> = ({ label, values, value, onChange }) => {
+const InputSelect = <T extends {}>({
+  label,
+  values,
+  value,
+  onChanged,
+}: Props<T>) => {
   return (
     <label>
       {label}:
-      <select value={value} onChange={onChange}>
+      <select
+        value={values.indexOf(value)}
+        onChange={(e) =>
+          onChanged({
+            context: values[Number(e.target.value)],
+          })
+        }
+      >
         {values.map((e, index) => (
           <option key={index} value={index}>
             {e}

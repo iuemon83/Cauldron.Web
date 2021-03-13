@@ -1,5 +1,6 @@
 import { CardEffectTimingDestroyEventDetail } from "../types/CardEffectTimingDestroyEventDetail";
 import { globalCache } from "./CauldronApi";
+import InputSelect from "./input/InputSelect";
 
 interface Props {
   detail: CardEffectTimingDestroyEventDetail;
@@ -9,29 +10,14 @@ interface Props {
 const CardEffectTimingDestroy: React.FC<Props> = ({ detail, onChanged }) => {
   const eventSources = globalCache.metadata!.effectTimingDestroyEventSources;
 
-  const handleChangeEventSource = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const id = Number(e.target.value);
-
-    onChanged({ source: eventSources[id] });
-  };
-
   return (
     <>
-      <div>
-        <label>
-          source:
-          <select
-            value={eventSources.indexOf(detail.source)}
-            onChange={handleChangeEventSource}
-          >
-            {eventSources.map((e, index) => (
-              <option key={index} value={index}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      <InputSelect
+        label="source"
+        values={eventSources}
+        value={detail.source}
+        onChanged={onChanged}
+      />
     </>
   );
 };

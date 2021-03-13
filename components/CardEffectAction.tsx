@@ -17,6 +17,7 @@ import CardEffectActionModifyCard from "./CardEffectActionModifyCard";
 import CardEffectActionModifyDamage from "./CardEffectActionModifyDamage";
 import CardEffectActionModifyPlayer from "./CardEffectActionModifyPlayer";
 import CardEffectActionMoveCard from "./CardEffectActionMoveCard";
+import InputOption from "./input/InputOption";
 
 interface Props {
   detail: CardEffectActionDetail;
@@ -24,150 +25,125 @@ interface Props {
 }
 
 const CardEffectAction: React.FC<Props> = ({ detail, onChanged }) => {
-  const optionValueInput = <
-    T extends keyof typeof detail,
-    U extends typeof detail[T]
-  >(
-    label: string,
-    key: T,
-    empty: () => U,
-    jtx: (d: any, h: (x: Partial<U>) => void) => any
-  ): any => {
-    const handleChangeChild = (x: Partial<U>) => {
-      onChanged({
-        [key]: {
-          ...(detail[key] ?? empty()),
-          ...x,
-        },
-      });
-    };
-
-    const handleHasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.checked ? empty() : undefined;
-
-      onChanged({ [key]: newValue });
-    };
-
-    return (
-      <>
-        <fieldset>
-          <legend>
-            <label>
-              <input
-                type="checkbox"
-                checked={detail[key] !== undefined}
-                onChange={handleHasChange}
-              ></input>
-              {label}
-            </label>
-          </legend>
-          {detail[key] && jtx(detail[key], handleChangeChild)}
-        </fieldset>
-      </>
-    );
-  };
-
   return (
     <>
-      {optionValueInput(
-        "ダメージ",
-        "damage",
-        CardEffectActionDamageEmpty,
-        (d, h) => (
+      <InputOption
+        label="ダメージ"
+        detail={detail}
+        keyName="damage"
+        empty={CardEffectActionDamageEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionDamage
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionDamage>
-        )
-      )}
-      {optionValueInput(
-        "カードの生成",
-        "addCard",
-        CardEffectActionAddCardEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="カードの生成"
+        detail={detail}
+        keyName="addCard"
+        empty={CardEffectActionAddCardEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionAddCard
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionAddCard>
-        )
-      )}
-      {optionValueInput(
-        "カードの修整",
-        "modifyCard",
-        CardEffectActionModifyCardEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="カードの修整"
+        detail={detail}
+        keyName="modifyCard"
+        empty={CardEffectActionModifyCardEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionModifyCard
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionModifyCard>
-        )
-      )}
-      {optionValueInput(
-        "カードの破壊",
-        "destroyCard",
-        CardEffectActionDestroyCardEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="カードの破壊"
+        detail={detail}
+        keyName="destroyCard"
+        empty={CardEffectActionDestroyCardEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionDestroyCard
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionDestroyCard>
-        )
-      )}
-      {optionValueInput(
-        "カードの移動",
-        "moveCard",
-        cardEffectActionMoveCardEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="カードの移動"
+        detail={detail}
+        keyName="moveCard"
+        empty={cardEffectActionMoveCardEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionMoveCard
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionMoveCard>
-        )
-      )}
-      {optionValueInput(
-        "ダメージの修整",
-        "modifyDamage",
-        CardEffectActionModifyDamageEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="ダメージの修整"
+        detail={detail}
+        keyName="modifyDamage"
+        empty={CardEffectActionModifyDamageEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionModifyDamage
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionModifyDamage>
-        )
-      )}
-      {optionValueInput(
-        "プレイヤーの修整",
-        "modifyPlayer",
-        cardEffectActionModifyPlayerEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="プレイヤーの修整"
+        detail={detail}
+        keyName="modifyPlayer"
+        empty={cardEffectActionModifyPlayerEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionModifyPlayer
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionModifyPlayer>
-        )
-      )}
-      {optionValueInput(
-        "ドロー",
-        "drawCard",
-        CardEffectActionDrawCardEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="ドロー"
+        detail={detail}
+        keyName="drawCard"
+        empty={CardEffectActionDrawCardEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionDrawCard
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionDrawCard>
-        )
-      )}
-      {optionValueInput(
-        "効果の追加",
-        "addEffect",
-        cardEffectActionAddEffectEmpty,
-        (d, h) => (
+        )}
+      />
+      <InputOption
+        label="効果の追加"
+        detail={detail}
+        keyName="addEffect"
+        empty={cardEffectActionAddEffectEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
           <CardEffectActionAddEffect
-            detail={d}
+            detail={d!}
             onChanged={h}
           ></CardEffectActionAddEffect>
-        )
-      )}
+        )}
+      />
     </>
   );
 };

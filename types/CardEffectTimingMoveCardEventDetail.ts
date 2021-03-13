@@ -9,7 +9,7 @@ export type CardEffectTimingMoveCardEventDetail = {
 
 export type EventSource = string;
 
-export const CardEffectTimingMoveCardEventEmpty = (): CardEffectTimingMoveCardEventDetail => {
+export const cardEffectTimingMoveCardEventEmpty = (): CardEffectTimingMoveCardEventDetail => {
   return {
     source: globalCache.metadata!.effectTimingMoveCardEventSources[0],
     from: globalCache.metadata!.zoneNames[0],

@@ -1,5 +1,6 @@
 import { CardTypeConditionDetail } from "../types/CardTypeConditionDetail";
 import { globalCache } from "./CauldronApi";
+import InputSelect from "./input/InputSelect";
 
 interface Props {
   detail: CardTypeConditionDetail;
@@ -11,21 +12,12 @@ const CardTypeCondition: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <div>
-        <label>値</label>
-        <select
-          value={cardTypes.indexOf(detail.value[0])}
-          onChange={(e) =>
-            onChanged({ value: [cardTypes[Number(e.target.value)]] })
-          }
-        >
-          {cardTypes.map((e, index) => (
-            <option key={index} value={index}>
-              {e}
-            </option>
-          ))}
-        </select>
-      </div>
+      <InputSelect
+        label="値"
+        values={cardTypes}
+        value={detail.value[0]}
+        onChanged={onChanged}
+      />
       <div>
         <label>not</label>
         <input

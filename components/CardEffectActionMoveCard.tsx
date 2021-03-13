@@ -1,6 +1,7 @@
 import { CardEffectActionMoveCardDetail } from "../types/CardEffectActionMoveCardDetail";
 import { globalCache } from "./CauldronApi";
 import Choice from "./Choice";
+import InputSelect from "./input/InputSelect";
 
 interface Props {
   detail: CardEffectActionMoveCardDetail;
@@ -10,27 +11,14 @@ interface Props {
 const CardEffectActionMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
   const zoneNames = globalCache.metadata!.zoneNames;
 
-  const handleChangeEventSource = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const id = Number(e.target.value);
-
-    onChanged({ to: zoneNames[id] });
-  };
-
   return (
     <>
-      <label>
-        移動先:
-        <select
-          value={zoneNames.indexOf(detail.to)}
-          onChange={handleChangeEventSource}
-        >
-          {zoneNames.map((e, index) => (
-            <option key={index} value={index}>
-              {e}
-            </option>
-          ))}
-        </select>
-      </label>
+      <InputSelect
+        label="移動先"
+        values={zoneNames}
+        value={detail.to}
+        onChanged={onChanged}
+      />
       <Choice
         detail={detail.cardsChoice}
         onChanged={(x) =>

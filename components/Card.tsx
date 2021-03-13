@@ -4,6 +4,7 @@ import { CardEffectDetail, cardEffectEmpty } from "../types/CardEffectDetail";
 import CardEffect from "./CardEffect";
 import { globalCache } from "./CauldronApi";
 import InputNumber from "./input/InputNumber";
+import InputNumberOption from "./input/InputNumberOption";
 import InputSelect from "./input/InputSelect";
 
 interface Props {
@@ -60,15 +61,12 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <section>
       <div>
-        <label>
-          コスト:
-          <input
-            type="number"
-            required
-            value={detail.cost}
-            onChange={(e) => onChanged({ cost: Number(e.target.value) })}
-          />
-        </label>
+        <InputNumber
+          label="コスト"
+          detail={detail}
+          keyName="cost"
+          onChanged={onChanged}
+        />
       </div>
       <div>
         <label>
@@ -104,22 +102,17 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
         <InputSelect
           label="種類"
           values={cardTypes}
-          value={cardTypes.indexOf(detail.type)}
-          onChange={(e) =>
-            onChanged({ type: cardTypes[Number(e.target.value)] })
-          }
+          value={detail.type}
+          onChanged={onChanged}
         />
       </div>
       <div>
-        <label>
-          パワー:
-          <input
-            type="number"
-            required
-            value={detail.power}
-            onChange={(e) => onChanged({ power: Number(e.target.value) })}
-          />
-        </label>
+        <InputNumber
+          label="パワー"
+          detail={detail}
+          keyName="power"
+          onChanged={onChanged}
+        />
       </div>
       <div>
         <InputNumber
@@ -144,48 +137,20 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
         ))}
       </div>
       <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={detail.numTurnsToCanAttack !== undefined}
-            onChange={(e) =>
-              onChanged({
-                numTurnsToCanAttack: e.target.checked ? 0 : undefined,
-              })
-            }
-          />
-          攻撃可能となるまでのターン数:
-        </label>
-        {detail.numTurnsToCanAttack !== undefined && (
-          <input
-            type="number"
-            value={detail.numTurnsToCanAttack}
-            onChange={(e) => onChanged({ cost: Number(e.target.value) })}
-          />
-        )}
+        <InputNumberOption
+          label="攻撃可能となるまでのターン数"
+          detail={detail}
+          keyName="numTurnsToCanAttack"
+          onChanged={onChanged}
+        />
       </div>
       <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={detail.numAttacksLimitInTurn !== undefined}
-            onChange={(e) =>
-              onChanged({
-                numAttacksLimitInTurn: e.target.checked ? 0 : undefined,
-              })
-            }
-          />
-          1ターン中に攻撃可能な回数:
-        </label>
-        {detail.numAttacksLimitInTurn !== undefined && (
-          <input
-            type="number"
-            value={detail.numAttacksLimitInTurn}
-            onChange={(e) =>
-              onChanged({ numAttacksLimitInTurn: Number(e.target.value) })
-            }
-          />
-        )}
+        <InputNumberOption
+          label="1ターン中に攻撃可能な回数"
+          detail={detail}
+          keyName="numAttacksLimitInTurn"
+          onChanged={onChanged}
+        />
       </div>
       効果
       <button onClick={() => addCardEffect()}>+</button>

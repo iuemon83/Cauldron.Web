@@ -6,7 +6,7 @@ export type CardEffectTimingPlayEventDetail = {
 
 export type EventSource = string;
 
-export const CardEffectTimingPlayEventEmpty = (): CardEffectTimingPlayEventDetail => {
+export const cardEffectTimingPlayEventEmpty = (): CardEffectTimingPlayEventDetail => {
   return {
     source: globalCache.metadata!.effectTimingPlayEventSources[0],
   };

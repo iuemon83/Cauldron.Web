@@ -1,5 +1,6 @@
 import { numValueModifierEmpty } from "../types/NumValueModifierDetail";
 import { PlayerModifierDetail } from "../types/PlayerModifierDetail";
+import InputOption from "./input/InputOption";
 import NumValueModifier from "./NumValueModifier";
 
 interface Props {
@@ -8,39 +9,19 @@ interface Props {
 }
 
 const PlayerModifier: React.FC<Props> = ({ detail, onChanged }) => {
-  const maxHp = () => {
-    const handleChangeHas = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChanged({
-        maxHp: e.target.checked ? numValueModifierEmpty() : undefined,
-      });
-    };
-
-    return (
-      <fieldset>
-        <legend>
-          <label>
-            <input
-              type="checkbox"
-              checked={detail.maxHp !== undefined}
-              onChange={handleChangeHas}
-            ></input>
-            Max HP
-          </label>
-        </legend>
-        {detail.maxHp && (
-          <NumValueModifier
-            detail={detail.maxHp}
-            onChanged={(x) => {
-              if (detail.maxHp) {
-                onChanged({ maxHp: { ...detail.maxHp, ...x } });
-              }
-            }}
-          ></NumValueModifier>
+  return (
+    <>
+      <InputOption
+        label="Max HP"
+        detail={detail}
+        keyName="maxHp"
+        empty={numValueModifierEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
         )}
-      </fieldset>
-    );
-  };
-
-  return <>{maxHp()}</>;
+      />
+    </>
+  );
 };
 export default PlayerModifier;

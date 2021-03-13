@@ -6,7 +6,7 @@ export type CardEffectTimingEndTurnEventDetail = {
 
 export type EventSource = string;
 
-export const CardEffectTimingEndTurnEventEmpty = (): CardEffectTimingEndTurnEventDetail => {
+export const cardEffectTimingEndTurnEventEmpty = (): CardEffectTimingEndTurnEventDetail => {
   return {
     source: globalCache.metadata!.effectTimingEndTurnEventSources[0],
   };
