@@ -1,3 +1,4 @@
+import { globalCache } from "../components/CauldronApi";
 import { NumValueDetail, numValueEmpty } from "./NumValueDetail";
 
 export type NumValueModifierDetail = {
@@ -5,12 +6,11 @@ export type NumValueModifierDetail = {
   value: NumValueDetail;
 };
 
+export type Operator = string;
+
 export const numValueModifierEmpty = (): NumValueModifierDetail => {
   return {
-    operator: operators[0],
+    operator: globalCache.metadata!.numValueModifierOperators[0],
     value: numValueEmpty(),
   };
 };
-
-export const operators = ["add", "sub"] as const;
-export type Operator = typeof operators[number];

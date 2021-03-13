@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { choiceEmpty } from "../types/ChoiceDetail";
-import { zoneNames, ZoneValueDetail } from "../types/ZoneValueDetail";
+import { ZoneValueDetail } from "../types/ZoneValueDetail";
+import { globalCache } from "./CauldronApi";
 import Choice from "./Choice";
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
-  const [isDynamicValue, setIsDynamicValue] = useState(false);
+  const zoneNames = globalCache.metadata!.zoneNames;
 
   const handleValueChange = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>
@@ -53,7 +54,6 @@ const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
     const newValue = e.target.checked ? choiceEmpty() : undefined;
 
     onChanged({ choice: newValue });
-    setIsDynamicValue(e.target.checked);
   };
 
   const dynamicValueInput = () => {
@@ -83,7 +83,7 @@ const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
         動的?:
         <input
           type="checkbox"
-          checked={isDynamicValue}
+          checked={detail.choice !== undefined}
           onChange={handleIsDynamicValueChange}
         />
       </label>

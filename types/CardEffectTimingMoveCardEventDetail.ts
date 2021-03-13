@@ -1,17 +1,18 @@
-import { ZoneName, zoneNames } from "./ZoneValueDetail";
+import { globalCache } from "../components/CauldronApi";
+import { ZoneName } from "./ZoneValueDetail";
 
 export type CardEffectTimingMoveCardEventDetail = {
   source: EventSource;
   from: ZoneName;
   to: ZoneName;
 };
-export const eventSources = ["this", "other"] as const;
-export type EventSource = typeof eventSources[number];
+
+export type EventSource = string;
 
 export const CardEffectTimingMoveCardEventEmpty = (): CardEffectTimingMoveCardEventDetail => {
   return {
-    source: eventSources[0],
-    from: zoneNames[0],
-    to: zoneNames[0],
+    source: globalCache.metadata!.effectTimingMoveCardEventSources[0],
+    from: globalCache.metadata!.zoneNames[0],
+    to: globalCache.metadata!.zoneNames[0],
   };
 };

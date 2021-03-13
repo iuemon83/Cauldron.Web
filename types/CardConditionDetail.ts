@@ -1,3 +1,4 @@
+import { globalCache } from "../components/CauldronApi";
 import { CardTypeConditionDetail } from "./CardTypeConditionDetail";
 import { NumConditionDetail } from "./NumConditionDetail";
 import { TextConditionDetail } from "./TextConditionDetail";
@@ -13,12 +14,11 @@ export type CardConditionDetail = {
   zoneCondition: ZoneConditionDetail | undefined;
 };
 
-export const cardConditionContexts = ["none", "all", "others"] as const;
-export type CardConditionContext = typeof cardConditionContexts[number];
+export type CardConditionContext = string;
 
 export const cardConditionEmpty = (): CardConditionDetail => {
   return {
-    context: cardConditionContexts[0],
+    context: globalCache.metadata!.cardConditionContexts[0],
     costCondition: undefined,
     nameCondition: undefined,
     powerCondition: undefined,

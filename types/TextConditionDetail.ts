@@ -1,3 +1,4 @@
+import { globalCache } from "../components/CauldronApi";
 import { TextValueDetail, textValueEmpty } from "./TextValueDetail";
 
 export type TextConditionDetail = {
@@ -6,13 +7,12 @@ export type TextConditionDetail = {
   not: boolean;
 };
 
-export const textCompares = ["=", "like"] as const;
-export type TextCompare = typeof textCompares[number];
+export type TextCompare = string;
 
 export const textConditionEmpty = (): TextConditionDetail => {
   return {
     value: textValueEmpty(),
-    compare: textCompares[0],
+    compare: globalCache.metadata!.textConditionCompares[0],
     not: false,
   };
 };

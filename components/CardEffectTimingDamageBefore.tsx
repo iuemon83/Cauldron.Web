@@ -1,10 +1,8 @@
 import { cardConditionEmpty } from "../types/CardConditionDetail";
-import {
-  CardEffectTimingDamageBeforeEventDetail,
-  eventSources,
-} from "../types/CardEffectTimingDamageBeforeEventDetail";
+import { CardEffectTimingDamageBeforeEventDetail } from "../types/CardEffectTimingDamageBeforeEventDetail";
 import { playerConditionEmpty } from "../types/PlayerConditionDetail";
 import CardCondition from "./CardCondition";
+import { globalCache } from "./CauldronApi";
 import PlayerCondition from "./PlayerCondition";
 
 interface Props {
@@ -18,6 +16,9 @@ const CardEffectTimingDamageBefore: React.FC<Props> = ({
   detail,
   onChanged,
 }) => {
+  const eventSources = globalCache.metadata!
+    .effectTimingDamageBeforeEventSources;
+
   const sourceInput = () => {
     const handleChangeEventSource = (
       e: React.ChangeEvent<HTMLSelectElement>
@@ -83,8 +84,10 @@ const CardEffectTimingDamageBefore: React.FC<Props> = ({
   };
 
   const cardConditionInput = () => {
-    const handleChangeHas = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.checked ? cardConditionEmpty() : undefined;
+    const handleChangeHas = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.checked
+        ? await cardConditionEmpty()
+        : undefined;
 
       onChanged({ cardCondition: newValue });
     };
@@ -105,10 +108,10 @@ const CardEffectTimingDamageBefore: React.FC<Props> = ({
           {detail.cardCondition && (
             <CardCondition
               detail={detail.cardCondition}
-              onChanged={(x) =>
+              onChanged={async (x) =>
                 onChanged({
                   cardCondition: {
-                    ...(detail.cardCondition ?? cardConditionEmpty()),
+                    ...(detail.cardCondition ?? (await cardConditionEmpty())),
                     ...x,
                   },
                 })

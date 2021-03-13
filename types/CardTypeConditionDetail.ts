@@ -1,4 +1,5 @@
-import { CardType, cardTypes } from "./CardDetail";
+import { globalCache } from "../components/CauldronApi";
+import { CardType } from "./CardDetail";
 
 export type CardTypeConditionDetail = {
   value: CardType[];
@@ -7,7 +8,7 @@ export type CardTypeConditionDetail = {
 
 export const cardTypeConditionEmpty = (): CardTypeConditionDetail => {
   return {
-    value: [cardTypes[0]],
+    value: [globalCache.metadata!.cardTypes[0]],
     not: false,
   };
 };

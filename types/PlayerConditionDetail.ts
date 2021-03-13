@@ -1,17 +1,16 @@
+import { globalCache } from "../components/CauldronApi";
+
 export type PlayerConditionDetail = {
   context: PlayerConditionContext;
   type: PlayerConditionType;
 };
 
-export const playerConditionContexts = ["none", "all"] as const;
-export type PlayerConditionContext = typeof playerConditionContexts[number];
-
-export const playerConditionTypes = ["none", "all", "opponent"] as const;
-export type PlayerConditionType = typeof playerConditionTypes[number];
+export type PlayerConditionContext = string;
+export type PlayerConditionType = string;
 
 export const playerConditionEmpty = (): PlayerConditionDetail => {
   return {
-    context: playerConditionContexts[0],
-    type: playerConditionTypes[0],
+    context: globalCache.metadata!.playerConditionContexts[0],
+    type: globalCache.metadata!.playerConditionTypes[0],
   };
 };

@@ -1,3 +1,4 @@
+import { globalCache } from "../components/CauldronApi";
 import { ChoiceDetail, choiceEmpty } from "./ChoiceDetail";
 
 export type TextValueCalculatorDetail = {
@@ -5,12 +6,11 @@ export type TextValueCalculatorDetail = {
   cardsChoice: ChoiceDetail;
 };
 
-export const valueTypes = ["cardName"] as const;
-export type ValueType = typeof valueTypes[number];
+export type ValueType = string;
 
 export const textValueCalculatorEmpty = (): TextValueCalculatorDetail => {
   return {
-    type: valueTypes[0],
+    type: globalCache.metadata!.textValueCalculatorValueTypes[0],
     cardsChoice: choiceEmpty(),
   };
 };

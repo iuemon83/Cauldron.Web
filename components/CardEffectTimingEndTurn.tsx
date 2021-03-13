@@ -1,7 +1,5 @@
-import {
-  CardEffectTimingEndTurnEventDetail,
-  eventSources,
-} from "../types/CardEffectTimingEndTurnEventDetail";
+import { CardEffectTimingEndTurnEventDetail } from "../types/CardEffectTimingEndTurnEventDetail";
+import { globalCache } from "./CauldronApi";
 
 interface Props {
   detail: CardEffectTimingEndTurnEventDetail;
@@ -9,6 +7,8 @@ interface Props {
 }
 
 const CardEffectTimingEndTurn: React.FC<Props> = ({ detail, onChanged }) => {
+  const eventSources = globalCache.metadata!.effectTimingEndTurnEventSources;
+
   const handleChangeEventSource = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = Number(e.target.value);
 

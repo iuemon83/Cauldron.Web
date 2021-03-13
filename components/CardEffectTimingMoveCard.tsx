@@ -1,8 +1,5 @@
-import {
-  CardEffectTimingMoveCardEventDetail,
-  eventSources,
-} from "../types/CardEffectTimingMoveCardEventDetail";
-import { zoneNames } from "../types/ZoneValueDetail";
+import { CardEffectTimingMoveCardEventDetail } from "../types/CardEffectTimingMoveCardEventDetail";
+import { globalCache } from "./CauldronApi";
 
 interface Props {
   detail: CardEffectTimingMoveCardEventDetail;
@@ -10,6 +7,10 @@ interface Props {
 }
 
 const CardEffectTimingMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
+  const eventSources = globalCache.metadata!.effectTimingMoveCardEventSources;
+
+  const zoneNames = globalCache.metadata!.zoneNames;
+
   return (
     <>
       <div>

@@ -5,13 +5,7 @@ export type ZoneValueDetail = {
   choice: ChoiceDetail | undefined;
 };
 
-export const zoneNames = [
-  "none",
-  "cardPool",
-  "youField",
-  "opponentField",
-] as const;
-export type ZoneName = typeof zoneNames[number];
+export type ZoneName = string;
 
 export const zoneValueEmpty = (): ZoneValueDetail => {
   return {

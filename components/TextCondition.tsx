@@ -1,7 +1,5 @@
-import {
-  textCompares,
-  TextConditionDetail,
-} from "../types/TextConditionDetail";
+import { TextConditionDetail } from "../types/TextConditionDetail";
+import { globalCache } from "./CauldronApi";
 import TextValue from "./TextValue";
 
 interface Props {
@@ -10,6 +8,8 @@ interface Props {
 }
 
 const TextCondition: React.FC<Props> = ({ detail, onChanged }) => {
+  const textCompares = globalCache.metadata!.textConditionCompares;
+
   return (
     <>
       <TextValue

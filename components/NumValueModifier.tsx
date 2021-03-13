@@ -1,7 +1,5 @@
-import {
-  NumValueModifierDetail,
-  operators,
-} from "../types/NumValueModifierDetail";
+import { NumValueModifierDetail } from "../types/NumValueModifierDetail";
+import { globalCache } from "./CauldronApi";
 import NumValue from "./NumValue";
 
 interface Props {
@@ -10,6 +8,8 @@ interface Props {
 }
 
 const NumValueModifier: React.FC<Props> = ({ detail, onChanged }) => {
+  const operators = globalCache.metadata!.numValueModifierOperators;
+
   return (
     <>
       <label>

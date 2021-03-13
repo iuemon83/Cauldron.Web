@@ -1,3 +1,4 @@
+import { globalCache } from "../components/CauldronApi";
 import { CardConditionDetail } from "./CardConditionDetail";
 import { PlayerConditionDetail } from "./PlayerConditionDetail";
 
@@ -8,12 +9,11 @@ export type ChoiceDetail = {
   cardCondition: CardConditionDetail | undefined;
 };
 
-export const howList = ["all", "random", "choose"] as const;
-export type ChoiceHow = typeof howList[number];
+export type ChoiceHow = string;
 
 export const choiceEmpty = (): ChoiceDetail => {
   return {
-    how: howList[0],
+    how: globalCache.metadata!.choiceHowList[0],
     numPicks: 0,
     cardCondition: undefined,
     playerCondition: undefined,

@@ -1,7 +1,5 @@
-import {
-  CardEffectTimingStartTurnEventDetail,
-  cardEffectTimingStartTurnEventSources,
-} from "../types/CardEffectTimingStartTurnEventDetail";
+import { CardEffectTimingStartTurnEventDetail } from "../types/CardEffectTimingStartTurnEventDetail";
+import { globalCache } from "./CauldronApi";
 
 interface Props {
   detail: CardEffectTimingStartTurnEventDetail;
@@ -9,10 +7,12 @@ interface Props {
 }
 
 const CardEffectTimingStartTurn: React.FC<Props> = ({ detail, onChanged }) => {
+  const eventSources = globalCache.metadata!.effectTimingStartTurnEventSources;
+
   const handleChangeEventSource = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = Number(e.target.value);
 
-    onChanged({ source: cardEffectTimingStartTurnEventSources[id] });
+    onChanged({ source: eventSources[id] });
   };
 
   return (
@@ -21,10 +21,10 @@ const CardEffectTimingStartTurn: React.FC<Props> = ({ detail, onChanged }) => {
         <label>
           source:
           <select
-            value={cardEffectTimingStartTurnEventSources.indexOf(detail.source)}
+            value={eventSources.indexOf(detail.source)}
             onChange={handleChangeEventSource}
           >
-            {cardEffectTimingStartTurnEventSources.map((e, index) => (
+            {eventSources.map((e, index) => (
               <option key={index} value={index}>
                 {e}
               </option>

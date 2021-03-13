@@ -1,12 +1,10 @@
-import {
-  cardConditionContexts,
-  CardConditionDetail,
-} from "../types/CardConditionDetail";
+import { CardConditionDetail } from "../types/CardConditionDetail";
 import { cardTypeConditionEmpty } from "../types/CardTypeConditionDetail";
 import { numConditionEmpty } from "../types/NumConditionDetail";
 import { textConditionEmpty } from "../types/TextConditionDetail";
 import { zoneConditionEmpty } from "../types/ZoneConditionDetail";
 import CardTypeCondition from "./CardTypeCondition";
+import { globalCache } from "./CauldronApi";
 
 import NumCondition from "./NumCondition";
 import TextCondition from "./TextCondition";
@@ -18,6 +16,8 @@ interface Props {
 }
 
 const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
+  const cardConditionContexts = globalCache.metadata!.cardConditionContexts;
+
   const handleHasCostConditionChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {

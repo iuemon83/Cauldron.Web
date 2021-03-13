@@ -1,11 +1,21 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Card from "../components/Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardDetail, cardEmpty } from "../types/CardDetail";
 import { CardSetDetail } from "../types/CardSetDetail";
+import { getCardMetaData, globalCache } from "../components/CauldronApi";
+import NumValueCalculator from "../components/NumValueCalculator";
+import { numValueCalculatorEmpty } from "../types/NumValueCalculatorDetail";
+
+async function LoadMetadata() {
+  const metadata = await getCardMetaData();
+  globalCache.metadata = metadata;
+}
 
 const Home: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+
   const filename = "cardset.json";
 
   const newCard = (index: number) => {
@@ -18,7 +28,7 @@ const Home: React.FC = () => {
   const [cardIndex, setCardIndex] = useState(0);
   const [cardset, setCardset] = useState({
     name: "",
-    cards: [newCard(cardIndex)],
+    cards: [],
   } as CardSetDetail);
 
   const handleCardChange = (newValue: Partial<CardDetail>) => {
@@ -140,6 +150,26 @@ const Home: React.FC = () => {
 
     return <input type="file" onChange={handleChangeLoadCardset} />;
   };
+
+  useEffect(() => {
+    if (!loading) {
+      return;
+    }
+
+    LoadMetadata().then(() => {
+      setCardset({
+        name: "",
+        cards: [newCard(cardIndex)],
+      });
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return <>Loading...</>;
+  }
+
+  console.log(globalCache.metadata);
 
   return (
     <div className={styles.container}>

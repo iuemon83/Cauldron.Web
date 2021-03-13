@@ -1,8 +1,7 @@
-import React, { useState } from "react";
 import { CardEffectConditionDetail } from "../types/CardEffectConditionDetail";
 import { CardEffectWhenEmpty } from "../types/CardEffectWhenDetail";
-import { zoneNames } from "../types/ZoneValueDetail";
 import CardEffectWhen from "./CardEffectWhen";
+import { globalCache } from "./CauldronApi";
 
 interface Props {
   detail: CardEffectConditionDetail;
@@ -10,6 +9,8 @@ interface Props {
 }
 
 const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
+  const zoneNames = globalCache.metadata!.zoneNames;
+
   const handleChangeEffectWhen = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.checked ? CardEffectWhenEmpty() : undefined;
 

@@ -1,7 +1,10 @@
 import React from "react";
-import { cardAbilities, CardDetail, cardTypes } from "../types/CardDetail";
+import { CardDetail } from "../types/CardDetail";
 import { CardEffectDetail, cardEffectEmpty } from "../types/CardEffectDetail";
 import CardEffect from "./CardEffect";
+import { globalCache } from "./CauldronApi";
+import InputNumber from "./input/InputNumber";
+import InputSelect from "./input/InputSelect";
 
 interface Props {
   detail: CardDetail;
@@ -9,6 +12,9 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ detail, onChanged }) => {
+  const cardTypes = globalCache.metadata!.cardTypes;
+  const cardAbilities = globalCache.metadata!.cardAbilities;
+
   const clearCardEffect = () => {
     onChanged({ effects: [] });
   };
@@ -95,22 +101,14 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
         </label>
       </div>
       <div>
-        <label>
-          種類:
-          <select
-            required
-            value={cardTypes.indexOf(detail.type)}
-            onChange={(e) =>
-              onChanged({ type: cardTypes[Number(e.target.value)] })
-            }
-          >
-            {cardTypes.map((e, index) => (
-              <option key={index} value={index}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </label>
+        <InputSelect
+          label="種類"
+          values={cardTypes}
+          value={cardTypes.indexOf(detail.type)}
+          onChange={(e) =>
+            onChanged({ type: cardTypes[Number(e.target.value)] })
+          }
+        />
       </div>
       <div>
         <label>
@@ -124,15 +122,12 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
         </label>
       </div>
       <div>
-        <label>
-          タフネス:
-          <input
-            type="number"
-            required
-            value={detail.toughness}
-            onChange={(e) => onChanged({ toughness: Number(e.target.value) })}
-          />
-        </label>
+        <InputNumber
+          label="タフネス"
+          detail={detail}
+          keyName="toughness"
+          onChanged={onChanged}
+        />
       </div>
       <div>
         アビリティ:
@@ -192,12 +187,9 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
           />
         )}
       </div>
-
-      <h2>
-        効果
-        <button onClick={() => addCardEffect()}>+</button>
-        <button onClick={() => clearCardEffect()}>clear</button>
-      </h2>
+      効果
+      <button onClick={() => addCardEffect()}>+</button>
+      <button onClick={() => clearCardEffect()}>clear</button>
       {detail.effects.map((e, index) => (
         <fieldset key={index}>
           <button onClick={() => removeCardEffect(index)}>-</button>

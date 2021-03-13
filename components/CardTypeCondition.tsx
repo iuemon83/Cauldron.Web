@@ -1,5 +1,5 @@
-import { cardTypes } from "../types/CardDetail";
 import { CardTypeConditionDetail } from "../types/CardTypeConditionDetail";
+import { globalCache } from "./CauldronApi";
 
 interface Props {
   detail: CardTypeConditionDetail;
@@ -7,6 +7,8 @@ interface Props {
 }
 
 const CardTypeCondition: React.FC<Props> = ({ detail, onChanged }) => {
+  const cardTypes = globalCache.metadata!.cardTypes;
+
   return (
     <>
       <div>

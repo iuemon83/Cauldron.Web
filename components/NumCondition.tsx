@@ -1,4 +1,5 @@
-import { numCompares, NumConditionDetail } from "../types/NumConditionDetail";
+import { NumConditionDetail } from "../types/NumConditionDetail";
+import { globalCache } from "./CauldronApi";
 
 interface Props {
   detail: NumConditionDetail;
@@ -6,6 +7,8 @@ interface Props {
 }
 
 const NumCondition: React.FC<Props> = ({ detail, onChanged }) => {
+  const numCompares = globalCache.metadata!.numConditionCompares;
+
   return (
     <>
       <div>

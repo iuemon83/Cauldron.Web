@@ -1,7 +1,8 @@
 import { cardConditionEmpty } from "../types/CardConditionDetail";
-import { ChoiceDetail, howList } from "../types/ChoiceDetail";
+import { ChoiceDetail } from "../types/ChoiceDetail";
 import { playerConditionEmpty } from "../types/PlayerConditionDetail";
 import CardCondition from "./CardCondition";
+import { globalCache } from "./CauldronApi";
 
 import PlayerCondition from "./PlayerCondition";
 
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const Choice: React.FC<Props> = ({ detail, onChanged }) => {
+  const howList = globalCache.metadata!.choiceHowList;
+
   const playerCondition = () => {
     if (!detail.playerCondition) {
       return null;

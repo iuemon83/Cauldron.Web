@@ -1,8 +1,5 @@
-import {
-  playerConditionContexts,
-  PlayerConditionDetail,
-  playerConditionTypes,
-} from "../types/PlayerConditionDetail";
+import { PlayerConditionDetail } from "../types/PlayerConditionDetail";
+import { globalCache } from "./CauldronApi";
 
 interface Props {
   detail: PlayerConditionDetail;
@@ -10,6 +7,10 @@ interface Props {
 }
 
 const PlayerCondition: React.FC<Props> = ({ detail, onChanged }) => {
+  const playerConditionContexts = globalCache.metadata!.playerConditionContexts;
+
+  const playerConditionTypes = globalCache.metadata!.playerConditionTypes;
+
   return (
     <>
       <div>

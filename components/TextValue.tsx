@@ -1,9 +1,7 @@
 import { choiceEmpty } from "../types/ChoiceDetail";
-import {
-  textValueCalculatorEmpty,
-  valueTypes,
-} from "../types/TextValueCalculatorDetail";
+import { textValueCalculatorEmpty } from "../types/TextValueCalculatorDetail";
 import { TextValueDetail } from "../types/TextValueDetail";
+import { globalCache } from "./CauldronApi";
 import Choice from "./Choice";
 
 interface Props {
@@ -12,6 +10,8 @@ interface Props {
 }
 
 const TextValue: React.FC<Props> = ({ detail, onChanged }) => {
+  const valueTypes = globalCache.metadata!.textValueCalculatorValueTypes;
+
   const pureValueInput = () => {
     return (
       <>
