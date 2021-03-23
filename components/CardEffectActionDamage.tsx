@@ -1,6 +1,6 @@
 import { CardEffectActionDamageDetail } from "../types/CardEffectActionDamageDetail";
 import Choice from "./Choice";
-import InputNumber from "./input/InputNumber";
+import NumValue from "./NumValue";
 
 interface Props {
   detail: CardEffectActionDamageDetail;
@@ -10,12 +10,13 @@ interface Props {
 const CardEffectActionDamage: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
-      <InputNumber
-        label="ダメージ値"
-        detail={detail}
-        keyName="value"
-        onChanged={onChanged}
-      />
+      <fieldset>
+        <legend>ダメージ値</legend>
+        <NumValue
+          detail={detail.value}
+          onChanged={(x) => onChanged({ value: { ...detail.value, ...x } })}
+        />
+      </fieldset>
       <Choice
         detail={detail.choice}
         onChanged={(x) =>

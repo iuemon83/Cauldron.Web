@@ -1,13 +1,14 @@
 import { NumConditionDetail, numConditionEmpty } from "./NumConditionDetail";
+import { NumValueDetail, numValueEmpty } from "./NumValueDetail";
 
 export type CardEffectIfDetail = {
   numCondition: NumConditionDetail;
-  numValue: number;
+  numValue: NumValueDetail;
 };
 
 export const CardEffectIfEmpty = (): CardEffectIfDetail => {
   return {
     numCondition: numConditionEmpty(),
-    numValue: 0,
+    numValue: numValueEmpty(),
   };
 };

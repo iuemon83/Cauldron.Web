@@ -13,16 +13,21 @@ const NumValueModifier: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <InputSelect
-        label="演算子"
-        values={operators}
-        value={detail.operator}
-        onChanged={onChanged}
-      />
-      <NumValue
-        detail={detail.value}
-        onChanged={(x) => onChanged({ value: { ...detail.value, ...x } })}
-      ></NumValue>
+      <div>
+        <InputSelect
+          label="演算子"
+          values={operators}
+          detail={detail}
+          keyName={"operator"}
+          onChanged={onChanged}
+        />
+      </div>
+      <div>
+        <NumValue
+          detail={detail.value}
+          onChanged={(x) => onChanged({ value: { ...detail.value, ...x } })}
+        ></NumValue>
+      </div>
     </>
   );
 };

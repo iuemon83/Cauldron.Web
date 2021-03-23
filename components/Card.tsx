@@ -102,7 +102,8 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
         <InputSelect
           label="種類"
           values={cardTypes}
-          value={detail.type}
+          detail={detail}
+          keyName={"type"}
           onChanged={onChanged}
         />
       </div>

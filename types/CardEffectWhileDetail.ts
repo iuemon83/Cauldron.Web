@@ -11,8 +11,8 @@ export type CardEffectWhileDetail = {
 
 export const CardEffectWhileEmpty = (): CardEffectWhileDetail => {
   return {
+    timing: cardEffectTimingEmpty(),
     skip: 0,
     take: 0,
-    timing: cardEffectTimingEmpty(),
   };
 };

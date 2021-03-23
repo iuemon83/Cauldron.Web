@@ -1,6 +1,8 @@
 import { CardEffectActionModifyCardDetail } from "../types/CardEffectActionModifyCardDetail";
+import { numValueModifierEmpty } from "../types/NumValueModifierDetail";
 import Choice from "./Choice";
-import NumValue from "./NumValue";
+import InputOption from "./input/InputOption";
+import NumValueModifier from "./NumValueModifier";
 
 interface Props {
   detail: CardEffectActionModifyCardDetail;
@@ -10,22 +12,36 @@ interface Props {
 const CardEffectActionModifyCard: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
-      <label>
-        パワー:
-        <NumValue
-          detail={detail.power}
-          onChanged={(x) => onChanged({ power: { ...detail.power, ...x } })}
-        ></NumValue>
-      </label>
-      <label>
-        タフネス:
-        <NumValue
-          detail={detail.toughness}
-          onChanged={(x) =>
-            onChanged({ toughness: { ...detail.toughness, ...x } })
-          }
-        ></NumValue>
-      </label>
+      <InputOption
+        label="コスト"
+        detail={detail}
+        keyName="cost"
+        empty={numValueModifierEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
+        )}
+      />
+      <InputOption
+        label="パワー"
+        detail={detail}
+        keyName="power"
+        empty={numValueModifierEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
+        )}
+      />
+      <InputOption
+        label="タフネス"
+        detail={detail}
+        keyName="toughness"
+        empty={numValueModifierEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
+        )}
+      />
       <Choice
         detail={detail.choice}
         onChanged={(x) =>

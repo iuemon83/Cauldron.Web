@@ -1,3 +1,4 @@
+import { deflate } from "node:zlib";
 import { PlayerConditionDetail } from "../types/PlayerConditionDetail";
 import { globalCache } from "./CauldronApi";
 import InputSelect from "./input/InputSelect";
@@ -14,18 +15,24 @@ const PlayerCondition: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <InputSelect
-        label="condition context"
-        values={playerConditionContexts}
-        value={detail.context}
-        onChanged={onChanged}
-      />
-      <InputSelect
-        label="condition type"
-        values={playerConditionTypes}
-        value={detail.type}
-        onChanged={onChanged}
-      />
+      <div>
+        <InputSelect
+          label="condition context"
+          values={playerConditionContexts}
+          detail={detail}
+          keyName={"context"}
+          onChanged={onChanged}
+        />
+      </div>
+      <div>
+        <InputSelect
+          label="condition type"
+          values={playerConditionTypes}
+          detail={detail}
+          keyName={"type"}
+          onChanged={onChanged}
+        />
+      </div>
     </>
   );
 };

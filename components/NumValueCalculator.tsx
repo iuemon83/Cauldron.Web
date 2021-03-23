@@ -17,7 +17,8 @@ const NumValueCalculator: React.FC<Props> = ({ detail, onChanged }) => {
       <InputSelect
         label="演算子"
         values={valueTypes}
-        value={detail.type}
+        detail={detail}
+        keyName={"type"}
         onChanged={onChanged}
       />
       <Choice

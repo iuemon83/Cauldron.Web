@@ -3,16 +3,18 @@ import { CardConditionDetail } from "./CardConditionDetail";
 import { PlayerConditionDetail } from "./PlayerConditionDetail";
 
 export type CardEffectTimingDamageAfterEventDetail = {
+  type: DamageType;
   source: EventSource;
   playerCondition: PlayerConditionDetail | undefined;
   cardCondition: CardConditionDetail | undefined;
 };
-// export const eventSources = ["all", "damageSource", "guard"] as const;
+
+export type DamageType = string;
 export type EventSource = string;
-//  typeof eventSources[number];
 
 export const EventEmpty = (): CardEffectTimingDamageAfterEventDetail => {
   return {
+    type: globalCache.metadata!.effectTimingDamageAfterDamageTypes[0],
     source: globalCache.metadata!.effectTimingDamageAfterEventSources[0],
     playerCondition: undefined,
     cardCondition: undefined,

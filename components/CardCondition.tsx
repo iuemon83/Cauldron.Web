@@ -25,7 +25,8 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
       <InputSelect
         label="condition context"
         values={cardConditionContexts}
-        value={detail.context}
+        detail={detail}
+        keyName={"context"}
         onChanged={onChanged}
       />
       <InputOption

@@ -1,6 +1,5 @@
 import { CardTypeConditionDetail } from "../types/CardTypeConditionDetail";
 import { globalCache } from "./CauldronApi";
-import InputSelect from "./input/InputSelect";
 
 interface Props {
   detail: CardTypeConditionDetail;
@@ -10,16 +9,38 @@ interface Props {
 const CardTypeCondition: React.FC<Props> = ({ detail, onChanged }) => {
   const cardTypes = globalCache.metadata!.cardTypes;
 
+  const handleAbilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const index = Number(e.target.value);
+
+    if (e.target.checked) {
+      const newlist = [...detail.value, cardTypes[index]];
+
+      onChanged({ value: newlist });
+    } else {
+      const newlist = detail.value.filter((x) => x !== cardTypes[index]);
+
+      onChanged({ value: newlist });
+    }
+  };
+
   return (
     <>
-      <InputSelect
-        label="値"
-        values={cardTypes}
-        value={detail.value[0]}
-        onChanged={onChanged}
-      />
       <div>
-        <label>not</label>
+        アビリティ:
+        {cardTypes.map((e, index) => (
+          <label key={index}>
+            <input
+              type="checkbox"
+              value={index}
+              checked={detail.value.indexOf(e) !== -1}
+              onChange={handleAbilityChange}
+            />
+            {e}
+          </label>
+        ))}
+      </div>
+      <div>
+        <label>not?:</label>
         <input
           type="checkbox"
           checked={detail.not}

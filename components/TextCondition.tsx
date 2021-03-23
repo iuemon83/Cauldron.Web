@@ -20,7 +20,8 @@ const TextCondition: React.FC<Props> = ({ detail, onChanged }) => {
       <InputSelect
         label="比較方法"
         values={textCompares}
-        value={detail.compare}
+        detail={detail}
+        keyName={"compare"}
         onChanged={onChanged}
       />
       <div>

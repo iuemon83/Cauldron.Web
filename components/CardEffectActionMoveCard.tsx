@@ -16,7 +16,8 @@ const CardEffectActionMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
       <InputSelect
         label="移動先"
         values={zoneNames}
-        value={detail.to}
+        detail={detail}
+        keyName={"to"}
         onChanged={onChanged}
       />
       <Choice

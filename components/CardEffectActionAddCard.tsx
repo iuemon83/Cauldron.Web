@@ -13,9 +13,9 @@ const CardEffectActionAddCard: React.FC<Props> = ({ detail, onChanged }) => {
       <fieldset>
         <legend>生成先の領域</legend>
         <ZoneValue
-          detail={detail.zoneToAdd}
+          detail={detail.zoneToAddCard}
           onChanged={(x) =>
-            onChanged({ zoneToAdd: { ...detail.zoneToAdd, ...x } })
+            onChanged({ zoneToAddCard: { ...detail.zoneToAddCard, ...x } })
           }
         ></ZoneValue>
       </fieldset>

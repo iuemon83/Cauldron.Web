@@ -18,17 +18,30 @@ const CardEffectTimingDamageBefore: React.FC<Props> = ({
   detail,
   onChanged,
 }) => {
+  const damageTypes = globalCache.metadata!.effectTimingDamageBeforeDamageTypes;
   const eventSources = globalCache.metadata!
     .effectTimingDamageBeforeEventSources;
 
   return (
     <>
-      <InputSelect
-        label="source"
-        values={eventSources}
-        value={detail.source}
-        onChanged={onChanged}
-      />
+      <div>
+        <InputSelect
+          label="type"
+          values={damageTypes}
+          detail={detail}
+          keyName={"type"}
+          onChanged={onChanged}
+        />
+      </div>
+      <div>
+        <InputSelect
+          label="source"
+          values={eventSources}
+          detail={detail}
+          keyName={"source"}
+          onChanged={onChanged}
+        />
+      </div>
       <InputOption
         label="プレイヤーの選択条件"
         detail={detail}

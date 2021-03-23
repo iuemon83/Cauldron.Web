@@ -1,6 +1,4 @@
 import { CardAbility, CardType } from "./CardDetail";
-import * as CardEffectTimingBattleBefore from "./CardEffectTimingBattleBeforeEventDetail";
-import * as CardEffectTimingBattleAfter from "./CardEffectTimingBattleAfterEventDetail";
 import * as CardEffectTimingDamageBefore from "./CardEffectTimingDamageBeforeEventDetail";
 import * as CardEffectTimingDamageAfter from "./CardEffectTimingDamageAfterEventDetail";
 import * as CardEffectTimingDestroy from "./CardEffectTimingDestroyEventDetail";
@@ -25,9 +23,9 @@ import {
 export type CardMetaData = {
   cardTypes: CardType[];
   cardAbilities: CardAbility[];
-  effectTimingBattleAfterEventSources: CardEffectTimingBattleAfter.EventSource[];
-  effectTimingBattleBeforeEventSources: CardEffectTimingBattleBefore.EventSource[];
+  effectTimingDamageAfterDamageTypes: CardEffectTimingDamageAfter.DamageType[];
   effectTimingDamageAfterEventSources: CardEffectTimingDamageAfter.EventSource[];
+  effectTimingDamageBeforeDamageTypes: CardEffectTimingDamageBefore.DamageType[];
   effectTimingDamageBeforeEventSources: CardEffectTimingDamageBefore.EventSource[];
   effectTimingDestroyEventSources: CardEffectTimingDestroy.EventSource[];
   effectTimingEndTurnEventSources: CardEffectTimingEndTurn.EventSource[];

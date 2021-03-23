@@ -15,7 +15,8 @@ const CardEffectTimingPlay: React.FC<Props> = ({ detail, onChanged }) => {
       <InputSelect
         label="source"
         values={eventSources}
-        value={detail.source}
+        detail={detail}
+        keyName={"source"}
         onChanged={onChanged}
       />
     </>

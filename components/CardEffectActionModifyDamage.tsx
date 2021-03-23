@@ -25,7 +25,7 @@ const CardEffectActionModifyDamage: React.FC<Props> = ({
         ></NumValueModifier>
       </fieldset>
       <fieldset>
-        <legend>削除するカードの条件</legend>
+        <legend>対象の条件</legend>
         <Choice
           detail={detail.choice}
           onChanged={(x) =>

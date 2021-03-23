@@ -19,18 +19,23 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <InputSelect
-        label="選択方式"
-        values={howList}
-        value={detail.how}
-        onChanged={onChanged}
-      />
-      <InputNumber
-        label="対象の数"
-        keyName="numPicks"
-        detail={detail}
-        onChanged={onChanged}
-      />
+      <div>
+        <InputSelect
+          label="選択方式"
+          values={howList}
+          detail={detail}
+          keyName={"how"}
+          onChanged={onChanged}
+        />
+      </div>
+      <div>
+        <InputNumber
+          label="対象の数"
+          keyName="numPicks"
+          detail={detail}
+          onChanged={onChanged}
+        />
+      </div>
       <InputOption
         label="プレイヤーの選択条件"
         detail={detail}

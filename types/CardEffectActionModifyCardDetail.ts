@@ -1,16 +1,18 @@
 import { ChoiceDetail, choiceEmpty } from "./ChoiceDetail";
-import { NumValueDetail, numValueEmpty } from "./NumValueDetail";
+import { NumValueModifierDetail } from "./NumValueModifierDetail";
 
 export type CardEffectActionModifyCardDetail = {
-  power: NumValueDetail;
-  toughness: NumValueDetail;
+  cost: NumValueModifierDetail | undefined;
+  power: NumValueModifierDetail | undefined;
+  toughness: NumValueModifierDetail | undefined;
   choice: ChoiceDetail;
 };
 
 export const CardEffectActionModifyCardEmpty = (): CardEffectActionModifyCardDetail => {
   return {
-    power: numValueEmpty(),
-    toughness: numValueEmpty(),
+    cost: undefined,
+    power: undefined,
+    toughness: undefined,
     choice: choiceEmpty(),
   };
 };

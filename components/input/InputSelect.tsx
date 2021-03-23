@@ -1,24 +1,26 @@
 interface Props<T> {
   label: string;
-  values: T[];
-  value: T;
+  values: T[keyof T][];
+  detail: T;
+  keyName: keyof T;
   onChanged: (e: any) => void;
 }
 
 const InputSelect = <T extends {}>({
   label,
   values,
-  value,
+  detail,
+  keyName,
   onChanged,
 }: Props<T>) => {
   return (
     <label>
       {label}:
       <select
-        value={values.indexOf(value)}
+        value={values.indexOf(detail[keyName])}
         onChange={(e) =>
           onChanged({
-            context: values[Number(e.target.value)],
+            [keyName]: values[Number(e.target.value)],
           })
         }
       >

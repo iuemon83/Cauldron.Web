@@ -13,18 +13,23 @@ const NumCondition: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <InputNumber
-        label="値"
-        keyName="value"
-        detail={detail}
-        onChanged={onChanged}
-      />
-      <InputSelect
-        label="比較方法"
-        values={numCompares}
-        value={detail.compare}
-        onChanged={onChanged}
-      />
+      <div>
+        <InputNumber
+          label="値"
+          keyName="value"
+          detail={detail}
+          onChanged={onChanged}
+        />
+      </div>
+      <div>
+        <InputSelect
+          label="比較方法"
+          values={numCompares}
+          detail={detail}
+          keyName={"compare"}
+          onChanged={onChanged}
+        />
+      </div>
       <div>
         <label>not</label>
         <input

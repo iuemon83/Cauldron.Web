@@ -17,19 +17,22 @@ const CardEffectTimingMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
       <InputSelect
         label="source"
         values={eventSources}
-        value={detail.source}
+        detail={detail}
+        keyName={"source"}
         onChanged={onChanged}
       />
       <InputSelect
         label="from"
         values={zoneNames}
-        value={detail.from}
+        detail={detail}
+        keyName={"from"}
         onChanged={onChanged}
       />
       <InputSelect
         label="to"
         values={zoneNames}
-        value={detail.to}
+        detail={detail}
+        keyName={"to"}
         onChanged={onChanged}
       />
     </>

@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { CardDetail, cardEmpty } from "../types/CardDetail";
 import { CardSetDetail } from "../types/CardSetDetail";
 import { getCardMetaData, globalCache } from "../components/CauldronApi";
-import NumValueCalculator from "../components/NumValueCalculator";
-import { numValueCalculatorEmpty } from "../types/NumValueCalculatorDetail";
 
 async function LoadMetadata() {
   const metadata = await getCardMetaData();
   globalCache.metadata = metadata;
+
+  console.log(globalCache.metadata);
 }
 
 const Home: React.FC = () => {
@@ -168,8 +168,6 @@ const Home: React.FC = () => {
   if (loading) {
     return <>Loading...</>;
   }
-
-  console.log(globalCache.metadata);
 
   return (
     <div className={styles.container}>
