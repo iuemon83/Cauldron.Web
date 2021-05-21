@@ -21,6 +21,36 @@ const PlayerModifier: React.FC<Props> = ({ detail, onChanged }) => {
           <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
         )}
       />
+      <InputOption
+        label="HP"
+        detail={detail}
+        keyName="hp"
+        empty={numValueModifierEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
+        )}
+      />
+      <InputOption
+        label="Max MP"
+        detail={detail}
+        keyName="maxMp"
+        empty={numValueModifierEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
+        )}
+      />
+      <InputOption
+        label="MP"
+        detail={detail}
+        keyName="mp"
+        empty={numValueModifierEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
+        )}
+      />
     </>
   );
 };
