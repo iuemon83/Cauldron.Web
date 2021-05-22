@@ -2,6 +2,7 @@ import { NumConditionDetail } from "../types/NumConditionDetail";
 import { globalCache } from "./CauldronApi";
 import InputNumber from "./input/InputNumber";
 import InputSelect from "./input/InputSelect";
+import { FormControlLabel, Switch } from "@material-ui/core";
 
 interface Props {
   detail: NumConditionDetail;
@@ -31,12 +32,15 @@ const NumCondition: React.FC<Props> = ({ detail, onChanged }) => {
         />
       </div>
       <div>
-        <label>not</label>
-        <input
-          type="checkbox"
-          checked={detail.not}
-          onChange={(e) => onChanged({ not: e.target.checked })}
-        ></input>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={detail.not}
+              onChange={(e) => onChanged({ not: e.target.checked })}
+            />
+          }
+          label="not?"
+        />
       </div>
     </>
   );

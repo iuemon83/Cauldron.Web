@@ -1,3 +1,5 @@
+import { Select, InputLabel, MenuItem, FormControl } from "@material-ui/core";
+
 interface Props<T> {
   label: string;
   values: T[keyof T][];
@@ -14,9 +16,9 @@ const InputSelect = <T extends {}>({
   onChanged,
 }: Props<T>) => {
   return (
-    <label>
-      {label}:
-      <select
+    <FormControl>
+      <InputLabel>{label}</InputLabel>
+      <Select
         value={values.indexOf(detail[keyName])}
         onChange={(e) =>
           onChanged({
@@ -25,12 +27,12 @@ const InputSelect = <T extends {}>({
         }
       >
         {values.map((e, index) => (
-          <option key={index} value={index}>
+          <MenuItem key={index} value={index}>
             {e}
-          </option>
+          </MenuItem>
         ))}
-      </select>
-    </label>
+      </Select>
+    </FormControl>
   );
 };
 

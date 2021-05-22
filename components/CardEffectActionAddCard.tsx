@@ -1,5 +1,8 @@
 import { CardEffectActionAddCardDetail } from "../types/CardEffectActionAddCardDetail";
+import { choiceEmpty } from "../types/ChoiceDetail";
+import { zoneValueEmpty } from "../types/ZoneValueDetail";
 import Choice from "./Choice";
+import InputOption from "./input/InputOption";
 import ZoneValue from "./ZoneValue";
 
 interface Props {
@@ -10,26 +13,22 @@ interface Props {
 const CardEffectActionAddCard: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
-      <fieldset>
-        <legend>生成先の領域</legend>
-        <ZoneValue
-          detail={detail.zoneToAddCard}
-          onChanged={(x) =>
-            onChanged({ zoneToAddCard: { ...detail.zoneToAddCard, ...x } })
-          }
-        ></ZoneValue>
-      </fieldset>
-      <fieldset>
-        <legend>生成するカードの条件</legend>
-        <Choice
-          detail={detail.choice}
-          onChanged={(x) =>
-            onChanged({
-              choice: { ...detail.choice, ...x },
-            })
-          }
-        ></Choice>
-      </fieldset>
+      <InputOption
+        label="生成先の領域"
+        detail={detail}
+        keyName="zoneToAddCard"
+        empty={zoneValueEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => <ZoneValue detail={d!} onChanged={h}></ZoneValue>}
+      />
+      <InputOption
+        label="生成するカードの条件"
+        detail={detail}
+        keyName="choice"
+        empty={choiceEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => <Choice detail={d!} onChanged={h}></Choice>}
+      />
     </>
   );
 };

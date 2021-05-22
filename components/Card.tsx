@@ -6,6 +6,36 @@ import { globalCache } from "./CauldronApi";
 import InputNumber from "./input/InputNumber";
 import InputNumberOption from "./input/InputNumberOption";
 import InputSelect from "./input/InputSelect";
+import InputText from "./input/InputText";
+import {
+  FormControlLabel,
+  Checkbox,
+  Switch,
+  TextField,
+  Button,
+  FormControl,
+  FormLabel,
+  FormGroup,
+} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  costInputField: {
+    width: "8ch",
+  },
+  powerInputField: {
+    width: "8ch",
+    textAlign: "right",
+  },
+  toughnessInputField: {
+    width: "10ch",
+  },
+  flavorTextInputField: {
+    width: "40ch",
+  },
+}));
 
 interface Props {
   detail: CardDetail;
@@ -58,45 +88,46 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
     }
   };
 
+  const classes = useStyles();
+
   return (
-    <section>
+    <>
+      <div>
+        <InputText
+          label="名前"
+          detail={detail}
+          keyName="name"
+          onChanged={onChanged}
+        />
+      </div>
       <div>
         <InputNumber
           label="コスト"
           detail={detail}
           keyName="cost"
           onChanged={onChanged}
+          className={classes.costInputField}
         />
       </div>
       <div>
-        <label>
-          名前:
-          <input
-            type="text"
-            required
-            value={detail.name}
-            onChange={(e) => onChanged({ name: e.target.value })}
-          />
-        </label>
+        <TextField
+          label="フレーバーテキスト"
+          multiline
+          value={detail.flavorText}
+          onChange={(e) => onChanged({ flavorText: e.target.value })}
+          className={classes.flavorTextInputField}
+        />
       </div>
       <div>
-        <label>
-          フレーバーテキスト:
-          <textarea
-            value={detail.flavorText}
-            onChange={(e) => onChanged({ flavorText: e.target.value })}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          トークン:
-          <input
-            type="checkbox"
-            checked={detail.isToken}
-            onChange={(e) => onChanged({ isToken: e.target.checked })}
-          />
-        </label>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={detail.isToken}
+              onChange={(e) => onChanged({ isToken: e.target.checked })}
+            />
+          }
+          label="トークン"
+        />
       </div>
       <div>
         <InputSelect
@@ -113,29 +144,36 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
           detail={detail}
           keyName="power"
           onChanged={onChanged}
+          className={classes.powerInputField}
         />
-      </div>
-      <div>
+        /
         <InputNumber
           label="タフネス"
           detail={detail}
           keyName="toughness"
           onChanged={onChanged}
+          className={classes.toughnessInputField}
         />
       </div>
       <div>
-        アビリティ:
-        {cardAbilities.map((e, index) => (
-          <label key={index}>
-            <input
-              type="checkbox"
-              value={index}
-              checked={detail.abilities.indexOf(e) !== -1}
-              onChange={handleAbilityChange}
-            />
-            {e}
-          </label>
-        ))}
+        <FormControl component="fieldset">
+          <FormLabel component="legend">アビリティ</FormLabel>
+          <FormGroup row>
+            {cardAbilities.map((e, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    value={index}
+                    checked={detail.abilities.indexOf(e) !== -1}
+                    onChange={handleAbilityChange}
+                  />
+                }
+                label={e}
+              />
+            ))}
+          </FormGroup>
+        </FormControl>
       </div>
       <div>
         <InputNumberOption
@@ -153,19 +191,43 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
           onChanged={onChanged}
         />
       </div>
-      効果
-      <button onClick={() => addCardEffect()}>+</button>
-      <button onClick={() => clearCardEffect()}>clear</button>
-      {detail.effects.map((e, index) => (
-        <fieldset key={index}>
-          <button onClick={() => removeCardEffect(index)}>-</button>
-          <CardEffect
-            detail={e}
-            onChanged={(x) => onCardEffectChanged({ ...e, ...x }, index)}
-          ></CardEffect>
-        </fieldset>
-      ))}
-    </section>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">
+          効果
+          <Button
+            variant="contained"
+            onClick={() => addCardEffect()}
+            color="primary"
+            startIcon={<AddIcon />}
+          />
+          <Button
+            variant="contained"
+            onClick={() => clearCardEffect()}
+            color="secondary"
+          >
+            Clear
+          </Button>
+        </FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          {detail.effects.map((e, index) => (
+            <FormGroup key={index}>
+              <span>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => removeCardEffect(index)}
+                  startIcon={<DeleteIcon />}
+                />
+              </span>
+              <CardEffect
+                detail={e}
+                onChanged={(x) => onCardEffectChanged({ ...e, ...x }, index)}
+              ></CardEffect>
+            </FormGroup>
+          ))}
+        </FormGroup>
+      </FormControl>
+    </>
   );
 };
 

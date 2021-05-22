@@ -1,3 +1,4 @@
+import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectActionModifyDamageDetail } from "../types/CardEffectActionModifyDamageDetail";
 import Choice from "./Choice";
 import NumValueModifier from "./NumValueModifier";
@@ -13,28 +14,32 @@ const CardEffectActionModifyDamage: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <fieldset>
-        <legend>修整方法</legend>
-        <NumValueModifier
-          detail={detail.value}
-          onChanged={(x) =>
-            onChanged({
-              value: { ...detail.value, ...x },
-            })
-          }
-        ></NumValueModifier>
-      </fieldset>
-      <fieldset>
-        <legend>対象の条件</legend>
-        <Choice
-          detail={detail.choice}
-          onChanged={(x) =>
-            onChanged({
-              choice: { ...detail.choice, ...x },
-            })
-          }
-        ></Choice>
-      </fieldset>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">修整方法</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <NumValueModifier
+            detail={detail.value}
+            onChanged={(x) =>
+              onChanged({
+                value: { ...detail.value, ...x },
+              })
+            }
+          ></NumValueModifier>
+        </FormGroup>
+      </FormControl>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">対象の条件</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <Choice
+            detail={detail.choice}
+            onChanged={(x) =>
+              onChanged({
+                choice: { ...detail.choice, ...x },
+              })
+            }
+          ></Choice>
+        </FormGroup>
+      </FormControl>
     </>
   );
 };

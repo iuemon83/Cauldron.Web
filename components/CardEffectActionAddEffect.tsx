@@ -1,7 +1,10 @@
+import { Button, FormControl, FormLabel } from "@material-ui/core";
 import { CardEffectActionAddEffectDetail } from "../types/CardEffectActionAddEffectDetail";
 import { CardEffectDetail, cardEffectEmpty } from "../types/CardEffectDetail";
 import CardEffect from "./CardEffect";
 import Choice from "./Choice";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
 
 interface Props {
   detail: CardEffectActionAddEffectDetail;
@@ -37,17 +40,40 @@ const CardEffectActionAddEffect: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      効果
-      <button onClick={() => addCardEffect()}>+</button>
-      <button onClick={() => clearCardEffect()}>clear</button>
+      <span>
+        <Button
+          variant="contained"
+          onClick={() => addCardEffect()}
+          color="primary"
+          startIcon={<AddIcon />}
+        />
+        <Button
+          variant="contained"
+          onClick={() => clearCardEffect()}
+          color="secondary"
+        >
+          Clear
+        </Button>
+      </span>
       {detail.effectToAdd.map((e, index) => (
-        <fieldset key={index}>
-          <button onClick={() => removeCardEffect(index)}>-</button>
+        <FormControl
+          component="fieldset"
+          key={index}
+          style={{ marginLeft: "2rem" }}
+        >
+          <FormLabel component="legend">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => removeCardEffect(index)}
+              startIcon={<DeleteIcon />}
+            />
+          </FormLabel>
           <CardEffect
             detail={e}
             onChanged={(x) => onCardEffectChanged({ ...e, ...x }, index)}
           ></CardEffect>
-        </fieldset>
+        </FormControl>
       ))}
       <Choice
         detail={detail.cardsChoice}

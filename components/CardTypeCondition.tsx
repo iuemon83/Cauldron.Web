@@ -1,5 +1,6 @@
 import { CardTypeConditionDetail } from "../types/CardTypeConditionDetail";
 import { globalCache } from "./CauldronApi";
+import { FormControlLabel, Checkbox, Switch } from "@material-ui/core";
 
 interface Props {
   detail: CardTypeConditionDetail;
@@ -28,24 +29,29 @@ const CardTypeCondition: React.FC<Props> = ({ detail, onChanged }) => {
       <div>
         アビリティ:
         {cardTypes.map((e, index) => (
-          <label key={index}>
-            <input
-              type="checkbox"
-              value={index}
-              checked={detail.value.indexOf(e) !== -1}
-              onChange={handleAbilityChange}
-            />
-            {e}
-          </label>
+          <FormControlLabel
+            key={index}
+            control={
+              <Checkbox
+                value={index}
+                checked={detail.value.indexOf(e) !== -1}
+                onChange={handleAbilityChange}
+              />
+            }
+            label={e}
+          />
         ))}
       </div>
       <div>
-        <label>not?:</label>
-        <input
-          type="checkbox"
-          checked={detail.not}
-          onChange={(e) => onChanged({ not: e.target.checked })}
-        ></input>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={detail.not}
+              onChange={(e) => onChanged({ not: e.target.checked })}
+            />
+          }
+          label="not?"
+        />
       </div>
     </>
   );

@@ -2,6 +2,7 @@ import { TextConditionDetail } from "../types/TextConditionDetail";
 import { globalCache } from "./CauldronApi";
 import InputSelect from "./input/InputSelect";
 import TextValue from "./TextValue";
+import { FormControlLabel, Switch } from "@material-ui/core";
 
 interface Props {
   detail: TextConditionDetail;
@@ -25,12 +26,15 @@ const TextCondition: React.FC<Props> = ({ detail, onChanged }) => {
         onChanged={onChanged}
       />
       <div>
-        <label>not</label>
-        <input
-          type="checkbox"
-          checked={detail.not}
-          onChange={(e) => onChanged({ not: e.target.checked })}
-        ></input>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={detail.not}
+              onChange={(e) => onChanged({ not: e.target.checked })}
+            />
+          }
+          label="not?"
+        />
       </div>
     </>
   );

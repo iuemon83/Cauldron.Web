@@ -1,3 +1,11 @@
+import {
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  FormGroup,
+} from "@material-ui/core";
+
 interface Props<K extends {}, T extends keyof K> {
   label: string;
   detail: K;
@@ -33,19 +41,22 @@ const InputOption = <K extends {}, T extends keyof K>({
 
   return (
     <>
-      <fieldset>
-        <legend>
-          <label>
-            <input
-              type="checkbox"
-              checked={detail[key] !== undefined}
-              onChange={handleHasChange}
-            ></input>
-            {label}
-          </label>
-        </legend>
-        {detail[key] !== undefined && jtx(detail[key], handleChangeChild)}
-      </fieldset>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={detail[key] !== undefined}
+                onChange={handleHasChange}
+              />
+            }
+            label={label}
+          />
+        </FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          {detail[key] !== undefined && jtx(detail[key], handleChangeChild)}
+        </FormGroup>
+      </FormControl>
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectActionDestroyCardDetail } from "../types/CardEffectActionDestroyCardDetail";
 import Choice from "./Choice";
 
@@ -12,17 +13,19 @@ const CardEffectActionDestroyCard: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <fieldset>
-        <legend>削除するカードの条件</legend>
-        <Choice
-          detail={detail.choice}
-          onChanged={(x) =>
-            onChanged({
-              choice: { ...detail.choice, ...x },
-            })
-          }
-        ></Choice>
-      </fieldset>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">削除するカードの条件</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <Choice
+            detail={detail.choice}
+            onChanged={(x) =>
+              onChanged({
+                choice: { ...detail.choice, ...x },
+              })
+            }
+          ></Choice>
+        </FormGroup>
+      </FormControl>
     </>
   );
 };

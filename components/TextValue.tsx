@@ -3,6 +3,14 @@ import { textValueCalculatorEmpty } from "../types/TextValueCalculatorDetail";
 import { TextValueDetail } from "../types/TextValueDetail";
 import { globalCache } from "./CauldronApi";
 import Choice from "./Choice";
+import {
+  FormControlLabel,
+  Switch,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@material-ui/core";
+import InputText from "./input/InputText";
 
 interface Props {
   detail: TextValueDetail;
@@ -15,14 +23,12 @@ const TextValue: React.FC<Props> = ({ detail, onChanged }) => {
   const pureValueInput = () => {
     return (
       <>
-        <label>
-          値:
-          <input
-            type="text"
-            value={detail.pureValue}
-            onChange={(e) => onChanged({ pureValue: e.target.value })}
-          />
-        </label>
+        <InputText
+          label="値"
+          detail={detail}
+          keyName="pureValue"
+          onChanged={onChanged}
+        />
       </>
     );
   };
@@ -33,27 +39,25 @@ const TextValue: React.FC<Props> = ({ detail, onChanged }) => {
     }
     return (
       <>
-        <label>
-          value:
-          <select
-            value={valueTypes.indexOf(detail.textValueCalculator.type)}
-            onChange={(e) => {
-              if (detail.textValueCalculator) {
-                const newTextCalc = {
-                  ...detail.textValueCalculator,
-                  type: valueTypes[Number(e.target.value)],
-                };
-                onChanged({ textValueCalculator: newTextCalc });
-              }
-            }}
-          >
-            {valueTypes.map((e, index) => (
-              <option key={index} value={index}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </label>
+        <InputLabel>value</InputLabel>
+        <Select
+          value={valueTypes.indexOf(detail.textValueCalculator.type)}
+          onChange={(e) => {
+            if (detail.textValueCalculator) {
+              const newTextCalc = {
+                ...detail.textValueCalculator,
+                type: valueTypes[Number(e.target.value)],
+              };
+              onChanged({ textValueCalculator: newTextCalc });
+            }
+          }}
+        >
+          {valueTypes.map((e, index) => (
+            <MenuItem key={index} value={index}>
+              {e}
+            </MenuItem>
+          ))}
+        </Select>
         <Choice
           detail={detail.textValueCalculator.cardsChoice}
           onChanged={(x) => {
@@ -88,14 +92,15 @@ const TextValue: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <label>
-        動的?:
-        <input
-          type="checkbox"
-          checked={detail.textValueCalculator !== undefined}
-          onChange={handleIsDynamicValueChange}
-        />
-      </label>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={detail.textValueCalculator !== undefined}
+            onChange={handleIsDynamicValueChange}
+          />
+        }
+        label="動的?"
+      />
       <div>{valueInput()}</div>
     </>
   );

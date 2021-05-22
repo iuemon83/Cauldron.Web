@@ -5,6 +5,49 @@ import { useEffect, useState } from "react";
 import { CardDetail, cardEmpty } from "../types/CardDetail";
 import { CardSetDetail } from "../types/CardSetDetail";
 import { getCardMetaData, globalCache } from "../components/CauldronApi";
+import {
+  Button,
+  TextField,
+  Select,
+  InputLabel,
+  MenuItem,
+  FormControl,
+} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
+import { ChangeEvent } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+    },
+    "& .MuiButton-root": {
+      margin: theme.spacing(1),
+    },
+    "& .MuiFormControl-root": {
+      margin: theme.spacing(1),
+    },
+    "min-height": "100vh",
+    padding: "0 1rem",
+    display: "flex",
+    "flex-direction": "column",
+    "justify-content": "left",
+    "align-items": "flex-start",
+  },
+
+  main: {
+    padding: "1rem 0",
+    flex: 1,
+    display: "flex",
+    "flex-direction": "column",
+    "justify-content": "left",
+    "align-items": "flex-start",
+  },
+}));
 
 async function LoadMetadata() {
   const metadata = await getCardMetaData();
@@ -44,18 +87,25 @@ const Home: React.FC = () => {
   };
 
   const CardSelect = () => {
-    const handleCardSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleCardSelect = (e: ChangeEvent<{ value: unknown }>) => {
       setCardIndex(Number(e.target.value));
     };
 
     return (
-      <select value={cardIndex} onChange={handleCardSelect}>
-        {cardset.cards.map((elm, index) => (
-          <option key={index} value={index}>
-            {elm.name}
-          </option>
-        ))}
-      </select>
+      <FormControl>
+        <InputLabel id="card-select-label">カード</InputLabel>
+        <Select
+          labelId="card-select-label"
+          value={cardIndex}
+          onChange={handleCardSelect}
+        >
+          {cardset.cards.map((elm, index) => (
+            <MenuItem key={index} value={index}>
+              {elm.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     );
   };
 
@@ -72,7 +122,14 @@ const Home: React.FC = () => {
       setCardIndex(cardset.cards.length);
     };
 
-    return <button onClick={handleAddCardButtonClick}>+</button>;
+    return (
+      <Button
+        variant="contained"
+        onClick={handleAddCardButtonClick}
+        color="primary"
+        startIcon={<AddIcon />}
+      />
+    );
   };
 
   const DeleteCardButton = () => {
@@ -95,7 +152,14 @@ const Home: React.FC = () => {
       });
     };
 
-    return <button onClick={handleDeleteCardButtonClick}>-</button>;
+    return (
+      <Button
+        variant="contained"
+        onClick={handleDeleteCardButtonClick}
+        color="secondary"
+        startIcon={<DeleteIcon />}
+      />
+    );
   };
   const DownloadButton = () => {
     const saveJson = (filename: string, jsonSource: {}) => {
@@ -120,7 +184,13 @@ const Home: React.FC = () => {
       saveJson(filename, cardset);
 
     return (
-      <button onClick={() => downloadCardSet(cardset)}>ダウンロード</button>
+      <Button
+        variant="contained"
+        onClick={() => downloadCardSet(cardset)}
+        startIcon={<GetAppIcon />}
+      >
+        保存
+      </Button>
     );
   };
 
@@ -148,8 +218,27 @@ const Home: React.FC = () => {
       reader.readAsText(cardsetFile);
     };
 
-    return <input type="file" onChange={handleChangeLoadCardset} />;
+    return (
+      <label htmlFor="load-cardset">
+        <input
+          style={{ display: "none" }}
+          id="load-cardset"
+          onChange={handleChangeLoadCardset}
+          type="file"
+        />
+
+        <Button
+          variant="contained"
+          component="span"
+          startIcon={<OpenInBrowserIcon />}
+        >
+          開く
+        </Button>
+      </label>
+    );
   };
+
+  const classes = useStyles();
 
   useEffect(() => {
     if (!loading) {
@@ -170,32 +259,34 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={classes.root}>
       <Head>
-        <title>Cauldron - カード作成ツール</title>
+        <title>Cauldron DCG - カード作成ツール</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Cauldron - カード作成ツール</h1>
+      <main className={classes.main}>
+        <h1 className={styles.title}>Cauldron DCG - カード作成ツール</h1>
         <span>
           <DownloadButton></DownloadButton>
           <LoadCardsetButton></LoadCardsetButton>
         </span>
-        <span>
-          <input
-            type="text"
-            value={cardset.name}
-            onChange={(e) => setCardset({ ...cardset, name: e.target.value })}
-          />
+        <TextField
+          label="カードセット名"
+          value={cardset.name}
+          onChange={(e) => setCardset({ ...cardset, name: e.target.value })}
+        />
+        <span style={{ display: "flex", alignItems: "center" }}>
           <CardSelect></CardSelect>
           <AddCardButton></AddCardButton>
           <DeleteCardButton></DeleteCardButton>
         </span>
-        <Card
-          detail={cardset.cards[cardIndex]}
-          onChanged={handleCardChange}
-        ></Card>
+        <div style={{ marginLeft: "2rem" }}>
+          <Card
+            detail={cardset.cards[cardIndex]}
+            onChanged={handleCardChange}
+          ></Card>
+        </div>
       </main>
 
       <footer className={styles.footer}>

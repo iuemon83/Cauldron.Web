@@ -1,5 +1,6 @@
 import { ZoneConditionDetail } from "../types/ZoneConditionDetail";
 import ZoneValue from "./ZoneValue";
+import { FormControlLabel, Switch } from "@material-ui/core";
 
 interface Props {
   detail: ZoneConditionDetail;
@@ -10,14 +11,15 @@ const ZoneCondition: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
       <div>
-        <label>
-          not?:
-          <input
-            type="checkbox"
-            checked={detail.not}
-            onChange={(e) => onChanged({ not: e.target.checked })}
-          ></input>
-        </label>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={detail.not}
+              onChange={(e) => onChanged({ not: e.target.checked })}
+            />
+          }
+          label="not?"
+        />
       </div>
       <ZoneValue
         detail={detail.value}

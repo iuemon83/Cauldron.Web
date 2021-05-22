@@ -1,8 +1,15 @@
-import { useState } from "react";
 import { choiceEmpty } from "../types/ChoiceDetail";
 import { ZoneValueDetail } from "../types/ZoneValueDetail";
 import { globalCache } from "./CauldronApi";
 import Choice from "./Choice";
+import {
+  FormControlLabel,
+  Checkbox,
+  Switch,
+  FormGroup,
+  FormControl,
+  FormLabel,
+} from "@material-ui/core";
 
 interface Props {
   detail: ZoneValueDetail;
@@ -12,9 +19,7 @@ interface Props {
 const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
   const zoneNames = globalCache.metadata!.zoneNames;
 
-  const handleValueChange = (
-    e: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ) => {
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const index = Number(e.currentTarget.value);
 
     if (e.currentTarget.checked) {
@@ -31,19 +36,24 @@ const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
   const pureValueInput = () => {
     return (
       <>
-        値:
-        {zoneNames.map((e, index) => (
-          <label key={index}>
-            <input
-              type="checkbox"
-              readOnly
-              value={index}
-              checked={detail.pureValue.indexOf(e) !== -1}
-              onClick={handleValueChange}
-            />
-            {e}
-          </label>
-        ))}
+        <FormControl component="fieldset">
+          <FormLabel component="legend">値</FormLabel>
+          <FormGroup row>
+            {zoneNames.map((e, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    value={index}
+                    checked={detail.pureValue.indexOf(e) !== -1}
+                    onChange={handleValueChange}
+                  />
+                }
+                label={e}
+              />
+            ))}
+          </FormGroup>
+        </FormControl>
       </>
     );
   };
@@ -79,14 +89,15 @@ const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <label>
-        動的?:
-        <input
-          type="checkbox"
-          checked={detail.choice !== undefined}
-          onChange={handleIsDynamicValueChange}
-        />
-      </label>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={detail.choice !== undefined}
+            onChange={handleIsDynamicValueChange}
+          />
+        }
+        label="動的?"
+      />
       <div>{valueInput()}</div>
     </>
   );

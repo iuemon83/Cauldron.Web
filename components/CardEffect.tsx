@@ -3,6 +3,7 @@ import { CardEffectConditionDetail } from "../types/CardEffectConditionDetail";
 import { CardEffectDetail } from "../types/CardEffectDetail";
 import CardEffectAction from "./CardEffectAction";
 import CardEffectCondition from "./CardEffectCondition";
+import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 
 interface Props {
   detail: CardEffectDetail;
@@ -31,21 +32,25 @@ const CardEffect: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <fieldset>
-        <legend>条件</legend>
-        <CardEffectCondition
-          detail={detail.condition}
-          onChanged={handleChangeCardEffectCondition}
-        ></CardEffectCondition>
-      </fieldset>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">条件</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <CardEffectCondition
+            detail={detail.condition}
+            onChanged={handleChangeCardEffectCondition}
+          ></CardEffectCondition>
+        </FormGroup>
+      </FormControl>
 
-      <fieldset>
-        <legend>アクション</legend>
-        <CardEffectAction
-          detail={detail.actions[0]}
-          onChanged={handleCardEffectActionChange}
-        ></CardEffectAction>
-      </fieldset>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">アクション</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <CardEffectAction
+            detail={detail.actions[0]}
+            onChanged={handleCardEffectActionChange}
+          ></CardEffectAction>
+        </FormGroup>
+      </FormControl>
     </>
   );
 };

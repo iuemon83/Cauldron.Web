@@ -1,3 +1,4 @@
+import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectActionModifyPlayerDetail } from "../types/CardEffectActionModifyPlayerDetail";
 import Choice from "./Choice";
 import PlayerModifier from "./PlayerModifier";
@@ -13,28 +14,32 @@ const CardEffectActionModifyPlayer: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <fieldset>
-        <legend>修整方法</legend>
-        <PlayerModifier
-          detail={detail.playerModifier}
-          onChanged={(x) =>
-            onChanged({
-              playerModifier: { ...detail.playerModifier, ...x },
-            })
-          }
-        ></PlayerModifier>
-      </fieldset>
-      <fieldset>
-        <legend>対象の選択条件</legend>
-        <Choice
-          detail={detail.choice}
-          onChanged={(x) =>
-            onChanged({
-              choice: { ...detail.choice, ...x },
-            })
-          }
-        ></Choice>
-      </fieldset>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">修整方法</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <PlayerModifier
+            detail={detail.playerModifier}
+            onChanged={(x) =>
+              onChanged({
+                playerModifier: { ...detail.playerModifier, ...x },
+              })
+            }
+          ></PlayerModifier>
+        </FormGroup>
+      </FormControl>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">対象の選択条件</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <Choice
+            detail={detail.choice}
+            onChanged={(x) =>
+              onChanged({
+                choice: { ...detail.choice, ...x },
+              })
+            }
+          ></Choice>
+        </FormGroup>
+      </FormControl>
     </>
   );
 };

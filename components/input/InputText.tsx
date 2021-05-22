@@ -1,3 +1,5 @@
+import { TextField } from "@material-ui/core";
+
 interface Props {
   label: string;
   detail: any;
@@ -7,14 +9,11 @@ interface Props {
 
 const InputText: React.FC<Props> = ({ label, detail, keyName, onChanged }) => {
   return (
-    <label>
-      {label}:
-      <input
-        type="text"
-        value={detail[keyName]}
-        onChange={(e) => onChanged({ [keyName]: e.target.value })}
-      />
-    </label>
+    <TextField
+      label={label}
+      value={detail[keyName]}
+      onChange={(e) => onChanged({ [keyName]: e.target.value })}
+    />
   );
 };
 
