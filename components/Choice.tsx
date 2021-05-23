@@ -1,10 +1,14 @@
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputLabel,
+} from "@material-ui/core";
 import { cardConditionEmpty } from "../types/CardConditionDetail";
 import { ChoiceDetail } from "../types/ChoiceDetail";
-import { playerConditionEmpty } from "../types/PlayerConditionDetail";
-import CardCondition from "./CardCondition";
 import { globalCache } from "./CauldronApi";
+import ChoiceSource from "./ChoiceSource";
 import InputNumber from "./input/InputNumber";
-import InputOption from "./input/InputOption";
 import InputSelect from "./input/InputSelect";
 
 import PlayerCondition from "./PlayerCondition";
@@ -36,26 +40,15 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
           onChanged={onChanged}
         />
       </div>
-      <InputOption
-        label="プレイヤーの選択条件"
-        detail={detail}
-        keyName="playerCondition"
-        empty={playerConditionEmpty}
-        onChanged={onChanged}
-        jtx={(d, h) => (
-          <PlayerCondition detail={d!} onChanged={h}></PlayerCondition>
-        )}
-      />
-      <InputOption
-        label="カードの選択条件"
-        detail={detail}
-        keyName="cardCondition"
-        empty={cardConditionEmpty}
-        onChanged={onChanged}
-        jtx={(d, h) => (
-          <CardCondition detail={d!} onChanged={h}></CardCondition>
-        )}
-      />
+      <div>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">選択候補</FormLabel>
+          <ChoiceSource
+            detail={detail.source}
+            onChanged={(e) => onChanged({ source: { ...detail.source, ...e } })}
+          />
+        </FormControl>
+      </div>
     </>
   );
 };

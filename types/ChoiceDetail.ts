@@ -1,12 +1,10 @@
 import { globalCache } from "../components/CauldronApi";
-import { CardConditionDetail } from "./CardConditionDetail";
-import { PlayerConditionDetail } from "./PlayerConditionDetail";
+import { ChoiceSourceDetail, choiceSourceEmpty } from "./ChoiceSourceDetail";
 
 export type ChoiceDetail = {
   how: ChoiceHow;
   numPicks: number;
-  playerCondition: PlayerConditionDetail | undefined;
-  cardCondition: CardConditionDetail | undefined;
+  source: ChoiceSourceDetail;
 };
 
 export type ChoiceHow = string;
@@ -15,7 +13,6 @@ export const choiceEmpty = (): ChoiceDetail => {
   return {
     how: globalCache.metadata!.choiceHowList[0],
     numPicks: 0,
-    cardCondition: undefined,
-    playerCondition: undefined,
+    source: choiceSourceEmpty(),
   };
 };
