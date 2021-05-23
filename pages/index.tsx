@@ -1,5 +1,4 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
 import { CardDetail, cardEmpty } from "../types/CardDetail";
@@ -8,17 +7,30 @@ import { getCardMetaData, globalCache } from "../components/CauldronApi";
 import {
   Button,
   TextField,
-  Select,
-  InputLabel,
-  MenuItem,
-  FormControl,
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Hidden,
+  Drawer,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import MenuIcon from "@material-ui/icons/Menu";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
-import { ChangeEvent } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import ArtifactIcon from "@material-ui/icons/AccountBalance";
+import CreatureIcon from "@material-ui/icons/Accessibility";
+import MagicIcon from "@material-ui/icons/Whatshot";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,21 +43,48 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiFormControl-root": {
       margin: theme.spacing(1),
     },
-    "min-height": "100vh",
-    padding: "0 1rem",
+    // "min-height": "100vh",
+    // padding: "0 1rem",
     display: "flex",
-    "flex-direction": "column",
-    "justify-content": "left",
-    "align-items": "flex-start",
+    // "flex-direction": "column",
+    // "justify-content": "left",
+    // "align-items": "flex-start",
   },
-
+  drawer: {
+    [theme.breakpoints.up("sm")]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  appBar: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
   main: {
-    padding: "1rem 0",
-    flex: 1,
-    display: "flex",
-    "flex-direction": "column",
-    "justify-content": "left",
-    "align-items": "flex-start",
+    // padding: "1rem 0",
+    // flex: 1,
+    // display: "flex",
+    // "flex-direction": "column",
+    // "justify-content": "left",
+    // "align-items": "flex-start",
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  title: {
+    flexGrow: 1,
   },
 }));
 
@@ -56,7 +95,19 @@ async function LoadMetadata() {
   console.log(globalCache.metadata);
 }
 
-const Home: React.FC = () => {
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+}
+
+const Home: React.FC<Props> = (props: Props) => {
+  const { window } = props;
+  const classes = useStyles();
+  const theme = useTheme();
+
   const [loading, setLoading] = useState(true);
 
   const filename = "cardset.json";
@@ -73,6 +124,7 @@ const Home: React.FC = () => {
     name: "",
     cards: [],
   } as CardSetDetail);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleCardChange = (newValue: Partial<CardDetail>) => {
     console.log(newValue);
@@ -86,27 +138,11 @@ const Home: React.FC = () => {
     });
   };
 
-  const CardSelect = () => {
-    const handleCardSelect = (e: ChangeEvent<{ value: unknown }>) => {
-      setCardIndex(Number(e.target.value));
-    };
-
-    return (
-      <FormControl>
-        <InputLabel id="card-select-label">カード</InputLabel>
-        <Select
-          labelId="card-select-label"
-          value={cardIndex}
-          onChange={handleCardSelect}
-        >
-          {cardset.cards.map((elm, index) => (
-            <MenuItem key={index} value={index}>
-              {elm.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    );
+  const handleCardListItemClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number
+  ) => {
+    setCardIndex(index);
   };
 
   const AddCardButton = () => {
@@ -114,12 +150,12 @@ const Home: React.FC = () => {
       setCardset((oldCardset) => {
         return {
           ...oldCardset,
-          cards: [...oldCardset.cards, newCard(cardset.cards.length)],
+          cards: [newCard(cardset.cards.length), ...oldCardset.cards],
         };
       });
 
       // 追加したカードを選択する
-      setCardIndex(cardset.cards.length);
+      setCardIndex(0);
     };
 
     return (
@@ -139,6 +175,11 @@ const Home: React.FC = () => {
       }
 
       const deleteIndex = cardIndex;
+
+      const confirmMessage = `「${cardset.cards[deleteIndex].name}」を削除します。`;
+      if (!confirm(confirmMessage)) {
+        return;
+      }
 
       if (deleteIndex === cardset.cards.length - 1) {
         setCardIndex(deleteIndex - 1);
@@ -185,7 +226,7 @@ const Home: React.FC = () => {
 
     return (
       <Button
-        variant="contained"
+        color="inherit"
         onClick={() => downloadCardSet(cardset)}
         startIcon={<GetAppIcon />}
       >
@@ -213,6 +254,7 @@ const Home: React.FC = () => {
         console.log(json);
 
         const cardset = JSON.parse(json);
+        setCardIndex(0);
         setCardset(cardset);
       };
       reader.readAsText(cardsetFile);
@@ -228,7 +270,7 @@ const Home: React.FC = () => {
         />
 
         <Button
-          variant="contained"
+          color="inherit"
           component="span"
           startIcon={<OpenInBrowserIcon />}
         >
@@ -238,7 +280,45 @@ const Home: React.FC = () => {
     );
   };
 
-  const classes = useStyles();
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <div>
+      <div className={classes.toolbar}>
+        <TextField
+          label="カードセット名"
+          value={cardset.name}
+          onChange={(e) => setCardset({ ...cardset, name: e.target.value })}
+        />
+        <AddCardButton></AddCardButton>
+        <DeleteCardButton></DeleteCardButton>
+      </div>
+      <Divider />
+      <List>
+        {cardset.cards.map((card, index) => (
+          <ListItem
+            button
+            key={index}
+            selected={cardIndex === index}
+            onClick={(e) => handleCardListItemClick(e, index)}
+          >
+            <ListItemIcon>
+              {card.type === "creature" ? (
+                <CreatureIcon />
+              ) : card.type === "artifact" ? (
+                <ArtifactIcon />
+              ) : (
+                <MagicIcon />
+              )}
+            </ListItemIcon>
+            <ListItemText primary={card.name} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
   useEffect(() => {
     if (!loading) {
@@ -258,6 +338,9 @@ const Home: React.FC = () => {
     return <>Loading...</>;
   }
 
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
   return (
     <div className={classes.root}>
       <Head>
@@ -265,40 +348,63 @@ const Home: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={classes.main}>
-        <h1 className={styles.title}>Cauldron DCG - カード作成ツール</h1>
-        <span>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap className={classes.title}>
+            Cauldron DCG - カード作成ツール
+          </Typography>
           <DownloadButton></DownloadButton>
           <LoadCardsetButton></LoadCardsetButton>
-        </span>
-        <TextField
-          label="カードセット名"
-          value={cardset.name}
-          onChange={(e) => setCardset({ ...cardset, name: e.target.value })}
-        />
-        <span style={{ display: "flex", alignItems: "center" }}>
-          <CardSelect></CardSelect>
-          <AddCardButton></AddCardButton>
-          <DeleteCardButton></DeleteCardButton>
-        </span>
-        <div style={{ marginLeft: "2rem" }}>
-          <Card
-            detail={cardset.cards[cardIndex]}
-            onChanged={handleCardChange}
-          ></Card>
-        </div>
+        </Toolbar>
+      </AppBar>
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === "rtl" ? "right" : "left"}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </nav>
+      <main className={classes.main}>
+        <div className={classes.toolbar} />
+        <Card
+          detail={cardset.cards[cardIndex]}
+          onChanged={handleCardChange}
+        ></Card>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   );
 };
