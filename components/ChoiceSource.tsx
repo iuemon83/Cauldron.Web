@@ -24,7 +24,10 @@ interface Props {
 }
 
 const ChoiceSource: React.FC<Props> = ({ detail, onChanged }) => {
-  const howList = globalCache.metadata!.choiceHowList;
+  const howListLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.choiceHowList.map((v) => [v.code, v.displayText])
+  );
+  const howList = Object.keys(howListLabelsByValue);
 
   const OrPlayerConditionList = () => {
     const clear = () => {
@@ -170,6 +173,7 @@ const ChoiceSource: React.FC<Props> = ({ detail, onChanged }) => {
           values={howList}
           detail={detail}
           keyName={"how"}
+          getLabel={(v) => howListLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>

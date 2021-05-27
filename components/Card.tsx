@@ -43,8 +43,16 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ detail, onChanged }) => {
-  const cardTypes = globalCache.metadata!.cardTypes;
-  const cardAbilities = globalCache.metadata!.cardAbilities;
+  const cardTypesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.cardTypes.map((v) => [v.code, v.displayText])
+  );
+  const cardTypes = Object.keys(cardTypesLabelsByValue);
+  const cardAbilitiesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.cardAbilities.map((v) => [v.code, v.displayText])
+  );
+  const cardAbilities = Object.keys(cardAbilitiesLabelsByValue);
+
+  console.log(cardAbilitiesLabelsByValue);
 
   const clearCardEffect = () => {
     onChanged({ effects: [] });
@@ -135,6 +143,7 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
           values={cardTypes}
           detail={detail}
           keyName={"type"}
+          getLabel={(v) => cardTypesLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>
@@ -169,7 +178,7 @@ const Card: React.FC<Props> = ({ detail, onChanged }) => {
                     onChange={handleAbilityChange}
                   />
                 }
-                label={e}
+                label={cardAbilitiesLabelsByValue[e]}
               />
             ))}
           </FormGroup>

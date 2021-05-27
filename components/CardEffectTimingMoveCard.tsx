@@ -8,9 +8,18 @@ interface Props {
 }
 
 const CardEffectTimingMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
-  const eventSources = globalCache.metadata!.effectTimingMoveCardEventSources;
+  const eventSourcesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.effectTimingMoveCardEventSources.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const eventSources = Object.keys(eventSourcesLabelsByValue);
 
-  const zoneNames = globalCache.metadata!.zoneNames;
+  const zoneNamesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.zoneNames.map((v) => [v.code, v.displayText])
+  );
+  const zoneNames = Object.keys(zoneNamesLabelsByValue);
 
   return (
     <>
@@ -19,6 +28,7 @@ const CardEffectTimingMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
         values={eventSources}
         detail={detail}
         keyName={"source"}
+        getLabel={(v) => eventSourcesLabelsByValue[v]}
         onChanged={onChanged}
       />
       <InputSelect
@@ -26,6 +36,7 @@ const CardEffectTimingMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
         values={zoneNames}
         detail={detail}
         keyName={"from"}
+        getLabel={(v) => zoneNamesLabelsByValue[v]}
         onChanged={onChanged}
       />
       <InputSelect
@@ -33,6 +44,7 @@ const CardEffectTimingMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
         values={zoneNames}
         detail={detail}
         keyName={"to"}
+        getLabel={(v) => zoneNamesLabelsByValue[v]}
         onChanged={onChanged}
       />
     </>

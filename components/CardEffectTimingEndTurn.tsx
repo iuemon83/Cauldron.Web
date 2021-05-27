@@ -8,7 +8,13 @@ interface Props {
 }
 
 const CardEffectTimingEndTurn: React.FC<Props> = ({ detail, onChanged }) => {
-  const eventSources = globalCache.metadata!.effectTimingEndTurnEventSources;
+  const eventSourcesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.effectTimingEndTurnEventSources.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const eventSources = Object.keys(eventSourcesLabelsByValue);
 
   return (
     <>
@@ -17,6 +23,7 @@ const CardEffectTimingEndTurn: React.FC<Props> = ({ detail, onChanged }) => {
         values={eventSources}
         detail={detail}
         keyName={"source"}
+        getLabel={(v) => eventSourcesLabelsByValue[v]}
         onChanged={onChanged}
       />
     </>

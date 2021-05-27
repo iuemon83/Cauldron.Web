@@ -1,11 +1,9 @@
 import { ChoiceDetail } from "./ChoiceDetail";
 
 export type ZoneValueDetail = {
-  pureValue: ZoneName[];
+  pureValue: string[];
   choice: ChoiceDetail | undefined;
 };
-
-export type ZoneName = string;
 
 export const zoneValueEmpty = (): ZoneValueDetail => {
   return {

@@ -1,9 +1,11 @@
-import { globalCache } from "../components/CauldronApi";
 import {
   CardEffectActionDetail,
   cardEffectActionEmpty,
 } from "./CardEffectActionDetail";
-import { CardEffectConditionDetail } from "./CardEffectConditionDetail";
+import {
+  CardEffectConditionDetail,
+  CardEffectConditionEmpty,
+} from "./CardEffectConditionDetail";
 
 export type CardEffectDetail = {
   condition: CardEffectConditionDetail;
@@ -12,12 +14,7 @@ export type CardEffectDetail = {
 
 export const cardEffectEmpty = (): CardEffectDetail => {
   return {
-    condition: {
-      zonePrettyName: globalCache.metadata!.zoneNames[0],
-      when: undefined,
-      while: undefined,
-      if: undefined,
-    },
+    condition: CardEffectConditionEmpty(),
     actions: [cardEffectActionEmpty()],
   };
 };

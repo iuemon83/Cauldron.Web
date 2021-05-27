@@ -1,4 +1,3 @@
-import { deflate } from "node:zlib";
 import { PlayerConditionDetail } from "../types/PlayerConditionDetail";
 import { globalCache } from "./CauldronApi";
 import InputSelect from "./input/InputSelect";
@@ -9,27 +8,43 @@ interface Props {
 }
 
 const PlayerCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const playerConditionContexts = globalCache.metadata!.playerConditionContexts;
+  const playerConditionContextsLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.playerConditionContexts.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const playerConditionContexts = Object.keys(
+    playerConditionContextsLabelsByValue
+  );
 
-  const playerConditionTypes = globalCache.metadata!.playerConditionTypes;
+  const playerConditionTypesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.playerConditionTypes.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const playerConditionTypes = Object.keys(playerConditionTypesLabelsByValue);
 
   return (
     <>
       <div>
         <InputSelect
-          label="condition context"
+          label="context"
           values={playerConditionContexts}
           detail={detail}
           keyName={"context"}
+          getLabel={(v) => playerConditionContextsLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>
       <div>
         <InputSelect
-          label="condition type"
+          label="type"
           values={playerConditionTypes}
           detail={detail}
           keyName={"type"}
+          getLabel={(v) => playerConditionTypesLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>

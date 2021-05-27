@@ -10,7 +10,13 @@ interface Props {
 }
 
 const NumCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const numCompares = globalCache.metadata!.numConditionCompares;
+  const numComparesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.numConditionCompares.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const numCompares = Object.keys(numComparesLabelsByValue);
 
   return (
     <>
@@ -28,6 +34,7 @@ const NumCondition: React.FC<Props> = ({ detail, onChanged }) => {
           values={numCompares}
           detail={detail}
           keyName={"compare"}
+          getLabel={(v) => numComparesLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>

@@ -10,7 +10,13 @@ interface Props {
 }
 
 const TextCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const textCompares = globalCache.metadata!.textConditionCompares;
+  const textComparesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.textConditionCompares.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const textCompares = Object.keys(textComparesLabelsByValue);
 
   return (
     <>
@@ -23,6 +29,7 @@ const TextCondition: React.FC<Props> = ({ detail, onChanged }) => {
         values={textCompares}
         detail={detail}
         keyName={"compare"}
+        getLabel={(v) => textComparesLabelsByValue[v]}
         onChanged={onChanged}
       />
       <div>

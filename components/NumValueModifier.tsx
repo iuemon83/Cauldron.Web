@@ -9,7 +9,13 @@ interface Props {
 }
 
 const NumValueModifier: React.FC<Props> = ({ detail, onChanged }) => {
-  const operators = globalCache.metadata!.numValueModifierOperators;
+  const operatorsLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.numValueModifierOperators.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const operators = Object.keys(operatorsLabelsByValue);
 
   return (
     <>
@@ -18,6 +24,7 @@ const NumValueModifier: React.FC<Props> = ({ detail, onChanged }) => {
         values={operators}
         detail={detail}
         keyName={"operator"}
+        getLabel={(v) => operatorsLabelsByValue[v]}
         onChanged={onChanged}
       />
       <NumValue

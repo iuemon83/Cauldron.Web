@@ -9,7 +9,10 @@ interface Props {
 }
 
 const CardEffectActionMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
-  const zoneNames = globalCache.metadata!.zoneNames;
+  const zoneNamesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.zoneNames.map((v) => [v.code, v.displayText])
+  );
+  const zoneNames = Object.keys(zoneNamesLabelsByValue);
 
   return (
     <>
@@ -18,6 +21,7 @@ const CardEffectActionMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
         values={zoneNames}
         detail={detail}
         keyName={"to"}
+        getLabel={(v) => zoneNamesLabelsByValue[v]}
         onChanged={onChanged}
       />
       <Choice

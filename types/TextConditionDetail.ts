@@ -1,18 +1,17 @@
 import { globalCache } from "../components/CauldronApi";
+import { TextCompare } from "./CardMetaData";
 import { TextValueDetail, textValueEmpty } from "./TextValueDetail";
 
 export type TextConditionDetail = {
   value: TextValueDetail;
-  compare: TextCompare;
+  compare: TextCompare["code"];
   not: boolean;
 };
-
-export type TextCompare = string;
 
 export const textConditionEmpty = (): TextConditionDetail => {
   return {
     value: textValueEmpty(),
-    compare: globalCache.metadata!.textConditionCompares[0],
+    compare: globalCache.metadata!.textConditionCompares[0].code,
     not: false,
   };
 };

@@ -10,7 +10,13 @@ interface Props {
 }
 
 const NumValueCalculator: React.FC<Props> = ({ detail, onChanged }) => {
-  const valueTypes = globalCache.metadata!.numValueCalculatorValueTypes;
+  const valueTypesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.numValueCalculatorValueTypes.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const valueTypes = Object.keys(valueTypesLabelsByValue);
 
   return (
     <>
@@ -19,6 +25,7 @@ const NumValueCalculator: React.FC<Props> = ({ detail, onChanged }) => {
         values={valueTypes}
         detail={detail}
         keyName={"type"}
+        getLabel={(v) => valueTypesLabelsByValue[v]}
         onChanged={onChanged}
       />
       <Choice

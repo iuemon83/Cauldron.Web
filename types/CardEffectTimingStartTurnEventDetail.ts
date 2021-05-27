@@ -1,13 +1,13 @@
 import { globalCache } from "../components/CauldronApi";
+import { CardEffectTimingStartTurnEventSource } from "./CardMetaData";
 
 export type CardEffectTimingStartTurnEventDetail = {
-  source: EventSource;
+  source: CardEffectTimingStartTurnEventSource["code"];
 };
 
-export type EventSource = string;
-
-export const cardEffectTimingStartTurnEventEmpty = (): CardEffectTimingStartTurnEventDetail => {
-  return {
-    source: globalCache.metadata!.effectTimingStartTurnEventSources[0],
+export const cardEffectTimingStartTurnEventEmpty =
+  (): CardEffectTimingStartTurnEventDetail => {
+    return {
+      source: globalCache.metadata!.effectTimingStartTurnEventSources[0].code,
+    };
   };
-};

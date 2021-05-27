@@ -15,7 +15,10 @@ interface Props {
 }
 
 const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const zoneNames = globalCache.metadata!.zoneNames;
+  const zoneNamesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.zoneNames.map((v) => [v.code, v.displayText])
+  );
+  const zoneNames = Object.keys(zoneNamesLabelsByValue);
 
   return (
     <>
@@ -24,6 +27,7 @@ const CardEffectCondition: React.FC<Props> = ({ detail, onChanged }) => {
         values={zoneNames}
         detail={detail}
         keyName={"zonePrettyName"}
+        getLabel={(v) => zoneNamesLabelsByValue[v]}
         onChanged={onChanged}
       />
       <InputOption

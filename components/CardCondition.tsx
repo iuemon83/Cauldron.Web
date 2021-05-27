@@ -18,15 +18,22 @@ interface Props {
 }
 
 const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const cardConditionContexts = globalCache.metadata!.cardConditionContexts;
+  const cardConditionContextsLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.cardConditionContexts.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const cardConditionContexts = Object.keys(cardConditionContextsLabelsByValue);
 
   return (
     <>
       <InputSelect
-        label="condition context"
+        label="context"
         values={cardConditionContexts}
         detail={detail}
         keyName={"context"}
+        getLabel={(v) => cardConditionContextsLabelsByValue[v]}
         onChanged={onChanged}
       />
       <InputOption

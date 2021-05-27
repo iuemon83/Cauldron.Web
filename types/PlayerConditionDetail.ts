@@ -1,16 +1,14 @@
 import { globalCache } from "../components/CauldronApi";
+import { PlayerConditionContext, PlayerConditionType } from "./CardMetaData";
 
 export type PlayerConditionDetail = {
-  context: PlayerConditionContext;
-  type: PlayerConditionType;
+  context: PlayerConditionContext["code"];
+  type: PlayerConditionType["code"];
 };
-
-export type PlayerConditionContext = string;
-export type PlayerConditionType = string;
 
 export const playerConditionEmpty = (): PlayerConditionDetail => {
   return {
-    context: globalCache.metadata!.playerConditionContexts[0],
-    type: globalCache.metadata!.playerConditionTypes[0],
+    context: globalCache.metadata!.playerConditionContexts[0].code,
+    type: globalCache.metadata!.playerConditionTypes[0].code,
   };
 };

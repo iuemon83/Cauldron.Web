@@ -1,17 +1,9 @@
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  InputLabel,
-} from "@material-ui/core";
-import { cardConditionEmpty } from "../types/CardConditionDetail";
+import { FormControl, FormLabel } from "@material-ui/core";
 import { ChoiceDetail } from "../types/ChoiceDetail";
 import { globalCache } from "./CauldronApi";
 import ChoiceSource from "./ChoiceSource";
 import InputNumber from "./input/InputNumber";
 import InputSelect from "./input/InputSelect";
-
-import PlayerCondition from "./PlayerCondition";
 
 interface Props {
   detail: ChoiceDetail;
@@ -19,7 +11,10 @@ interface Props {
 }
 
 const Choice: React.FC<Props> = ({ detail, onChanged }) => {
-  const howList = globalCache.metadata!.choiceHowList;
+  const howListLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.choiceHowList.map((v) => [v.code, v.displayText])
+  );
+  const howList = Object.keys(howListLabelsByValue);
 
   return (
     <>
@@ -29,6 +24,7 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
           values={howList}
           detail={detail}
           keyName={"how"}
+          getLabel={(v) => howListLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>

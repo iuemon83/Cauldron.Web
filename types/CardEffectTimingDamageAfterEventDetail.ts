@@ -1,16 +1,17 @@
 import { globalCache } from "../components/CauldronApi";
 import { CardConditionDetail } from "./CardConditionDetail";
+import {
+  CardEffectTimingDamageAfterDamageType,
+  CardEffectTimingDamageAfterEventSource,
+} from "./CardMetaData";
 import { PlayerConditionDetail } from "./PlayerConditionDetail";
 
 export type CardEffectTimingDamageAfterEventDetail = {
-  type: DamageType;
-  source: EventSource;
+  type: CardEffectTimingDamageAfterDamageType;
+  source: CardEffectTimingDamageAfterEventSource;
   playerCondition: PlayerConditionDetail | undefined;
   cardCondition: CardConditionDetail | undefined;
 };
-
-export type DamageType = string;
-export type EventSource = string;
 
 export const EventEmpty = (): CardEffectTimingDamageAfterEventDetail => {
   return {

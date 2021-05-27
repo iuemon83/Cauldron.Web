@@ -18,9 +18,21 @@ const CardEffectTimingDamageBefore: React.FC<Props> = ({
   detail,
   onChanged,
 }) => {
-  const damageTypes = globalCache.metadata!.effectTimingDamageBeforeDamageTypes;
-  const eventSources = globalCache.metadata!
-    .effectTimingDamageBeforeEventSources;
+  const damageTypesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.effectTimingDamageBeforeDamageTypes.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const damageTypes = Object.keys(damageTypesLabelsByValue);
+
+  const eventSourcesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.effectTimingDamageBeforeEventSources.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const eventSources = Object.keys(eventSourcesLabelsByValue);
 
   return (
     <>
@@ -30,6 +42,7 @@ const CardEffectTimingDamageBefore: React.FC<Props> = ({
           values={damageTypes}
           detail={detail}
           keyName={"type"}
+          getLabel={(v) => damageTypesLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>
@@ -39,6 +52,7 @@ const CardEffectTimingDamageBefore: React.FC<Props> = ({
           values={eventSources}
           detail={detail}
           keyName={"source"}
+          getLabel={(v) => eventSourcesLabelsByValue[v]}
           onChanged={onChanged}
         />
       </div>

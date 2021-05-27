@@ -1,34 +1,29 @@
 import { Select, InputLabel, MenuItem, FormControl } from "@material-ui/core";
 
-interface Props<T> {
+interface Props<T, U extends keyof T> {
   label: string;
-  values: T[keyof T][];
+  values: T[U][];
   detail: T;
-  keyName: keyof T;
+  keyName: U;
+  getLabel: (value: T[U]) => string;
   onChanged: (e: any) => void;
 }
 
-const InputSelect = <T extends {}>({
-  label,
-  values,
-  detail,
-  keyName,
-  onChanged,
-}: Props<T>) => {
+const InputSelect = <T extends {}, U extends keyof T>(p: Props<T, U>) => {
   return (
     <FormControl>
-      <InputLabel>{label}</InputLabel>
+      <InputLabel>{p.label}</InputLabel>
       <Select
-        value={values.indexOf(detail[keyName])}
+        value={p.values.indexOf(p.detail[p.keyName])}
         onChange={(e) =>
-          onChanged({
-            [keyName]: values[Number(e.target.value)],
+          p.onChanged({
+            [p.keyName]: p.values[Number(e.target.value)],
           })
         }
       >
-        {values.map((e, index) => (
+        {p.values.map((e, index) => (
           <MenuItem key={index} value={index}>
-            {e}
+            {p.getLabel(e)}
           </MenuItem>
         ))}
       </Select>

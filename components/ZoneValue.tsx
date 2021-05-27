@@ -17,7 +17,10 @@ interface Props {
 }
 
 const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
-  const zoneNames = globalCache.metadata!.zoneNames;
+  const zoneNamesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.zoneNames.map((v) => [v.code, v.displayText])
+  );
+  const zoneNames = Object.keys(zoneNamesLabelsByValue);
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const index = Number(e.currentTarget.value);
@@ -49,7 +52,7 @@ const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
                     onChange={handleValueChange}
                   />
                 }
-                label={e}
+                label={zoneNamesLabelsByValue[e]}
               />
             ))}
           </FormGroup>

@@ -8,7 +8,13 @@ interface Props {
 }
 
 const CardEffectTimingStartTurn: React.FC<Props> = ({ detail, onChanged }) => {
-  const eventSources = globalCache.metadata!.effectTimingStartTurnEventSources;
+  const eventSourcesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.effectTimingStartTurnEventSources.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const eventSources = Object.keys(eventSourcesLabelsByValue);
 
   return (
     <>
@@ -17,6 +23,7 @@ const CardEffectTimingStartTurn: React.FC<Props> = ({ detail, onChanged }) => {
         values={eventSources}
         detail={detail}
         keyName={"source"}
+        getLabel={(v) => eventSourcesLabelsByValue[v]}
         onChanged={onChanged}
       />
     </>

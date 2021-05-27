@@ -1,13 +1,13 @@
 import { globalCache } from "../components/CauldronApi";
+import { CardEffectTimingDestroyEventSource } from "./CardMetaData";
 
 export type CardEffectTimingDestroyEventDetail = {
-  source: EventSource;
+  source: CardEffectTimingDestroyEventSource["code"];
 };
 
-export type EventSource = string;
-
-export const cardEffectTimingDestroyEventEmpty = (): CardEffectTimingDestroyEventDetail => {
-  return {
-    source: globalCache.metadata!.effectTimingDestroyEventSources[0],
+export const cardEffectTimingDestroyEventEmpty =
+  (): CardEffectTimingDestroyEventDetail => {
+    return {
+      source: globalCache.metadata!.effectTimingDestroyEventSources[0].code,
+    };
   };
-};

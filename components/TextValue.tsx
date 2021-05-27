@@ -18,7 +18,13 @@ interface Props {
 }
 
 const TextValue: React.FC<Props> = ({ detail, onChanged }) => {
-  const valueTypes = globalCache.metadata!.textValueCalculatorValueTypes;
+  const valueTypesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.textValueCalculatorValueTypes.map((v) => [
+      v.code,
+      v.displayText,
+    ])
+  );
+  const valueTypes = Object.keys(valueTypesLabelsByValue);
 
   const pureValueInput = () => {
     return (

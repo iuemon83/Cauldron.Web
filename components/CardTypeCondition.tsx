@@ -8,9 +8,12 @@ interface Props {
 }
 
 const CardTypeCondition: React.FC<Props> = ({ detail, onChanged }) => {
-  const cardTypes = globalCache.metadata!.cardTypes;
+  const cardTypesLabelsByValue = Object.fromEntries(
+    globalCache.metadata!.cardTypes.map((v) => [v.code, v.displayText])
+  );
+  const cardTypes = Object.keys(cardTypesLabelsByValue);
 
-  const handleAbilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCardTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const index = Number(e.target.value);
 
     if (e.target.checked) {
@@ -27,7 +30,7 @@ const CardTypeCondition: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
       <div>
-        アビリティ:
+        カードタイプ:
         {cardTypes.map((e, index) => (
           <FormControlLabel
             key={index}
@@ -35,10 +38,10 @@ const CardTypeCondition: React.FC<Props> = ({ detail, onChanged }) => {
               <Checkbox
                 value={index}
                 checked={detail.value.indexOf(e) !== -1}
-                onChange={handleAbilityChange}
+                onChange={handleCardTypeChange}
               />
             }
-            label={e}
+            label={cardTypesLabelsByValue[e]}
           />
         ))}
       </div>
