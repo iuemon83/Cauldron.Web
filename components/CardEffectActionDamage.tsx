@@ -20,14 +20,19 @@ const CardEffectActionDamage: React.FC<Props> = ({ detail, onChanged }) => {
           />
         </FormGroup>
       </FormControl>
-      <Choice
-        detail={detail.choice}
-        onChanged={(x) =>
-          onChanged({
-            choice: { ...detail.choice, ...x },
-          })
-        }
-      ></Choice>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">ダメージを与える対象の選択条件</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <Choice
+            detail={detail.choice}
+            onChanged={(x) =>
+              onChanged({
+                choice: { ...detail.choice, ...x },
+              })
+            }
+          ></Choice>
+        </FormGroup>
+      </FormControl>
     </>
   );
 };

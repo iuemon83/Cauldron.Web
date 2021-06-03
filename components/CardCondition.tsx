@@ -1,8 +1,10 @@
 import { CardConditionDetail } from "../types/CardConditionDetail";
+import { cardSetConditionEmpty } from "../types/CardSetConditionDetail";
 import { cardTypeConditionEmpty } from "../types/CardTypeConditionDetail";
 import { numConditionEmpty } from "../types/NumConditionDetail";
 import { textConditionEmpty } from "../types/TextConditionDetail";
 import { zoneConditionEmpty } from "../types/ZoneConditionDetail";
+import CardSetCondition from "./CardSetCondition";
 import CardTypeCondition from "./CardTypeCondition";
 import { globalCache } from "./CauldronApi";
 import InputOption from "./input/InputOption";
@@ -29,12 +31,22 @@ const CardCondition: React.FC<Props> = ({ detail, onChanged }) => {
   return (
     <>
       <InputSelect
-        label="context"
+        label="コンテキスト"
         values={cardConditionContexts}
         detail={detail}
         keyName={"context"}
         getLabel={(v) => cardConditionContextsLabelsByValue[v]}
         onChanged={onChanged}
+      />
+      <InputOption
+        label="カードセットの条件"
+        detail={detail}
+        keyName="cardSetCondition"
+        empty={cardSetConditionEmpty}
+        onChanged={onChanged}
+        jtx={(d, h) => (
+          <CardSetCondition detail={d!} onChanged={h}></CardSetCondition>
+        )}
       />
       <InputOption
         label="コストの条件"

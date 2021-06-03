@@ -14,7 +14,7 @@ const CardEffectActionDestroyCard: React.FC<Props> = ({
   return (
     <>
       <FormControl component="fieldset">
-        <FormLabel component="legend">削除するカードの条件</FormLabel>
+        <FormLabel component="legend">削除するカードの選択条件</FormLabel>
         <FormGroup style={{ marginLeft: "2rem" }}>
           <Choice
             detail={detail.choice}

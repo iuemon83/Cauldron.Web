@@ -28,7 +28,7 @@ const CardEffectActionModifyDamage: React.FC<Props> = ({
         </FormGroup>
       </FormControl>
       <FormControl component="fieldset">
-        <FormLabel component="legend">対象の条件</FormLabel>
+        <FormLabel component="legend">対象の選択条件</FormLabel>
         <FormGroup style={{ marginLeft: "2rem" }}>
           <Choice
             detail={detail.choice}

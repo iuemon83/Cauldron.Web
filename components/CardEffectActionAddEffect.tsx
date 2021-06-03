@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel } from "@material-ui/core";
+import { Button, FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectActionAddEffectDetail } from "../types/CardEffectActionAddEffectDetail";
 import { CardEffectDetail, cardEffectEmpty } from "../types/CardEffectDetail";
 import CardEffect from "./CardEffect";
@@ -75,14 +75,19 @@ const CardEffectActionAddEffect: React.FC<Props> = ({ detail, onChanged }) => {
           ></CardEffect>
         </FormControl>
       ))}
-      <Choice
-        detail={detail.cardsChoice}
-        onChanged={(x) =>
-          onChanged({
-            cardsChoice: { ...detail.cardsChoice, ...x },
-          })
-        }
-      ></Choice>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">効果を追加するカードの選択条件</FormLabel>
+        <FormGroup style={{ marginLeft: "2rem" }}>
+          <Choice
+            detail={detail.cardsChoice}
+            onChanged={(x) =>
+              onChanged({
+                cardsChoice: { ...detail.cardsChoice, ...x },
+              })
+            }
+          ></Choice>
+        </FormGroup>
+      </FormControl>
     </>
   );
 };
