@@ -1,7 +1,7 @@
-import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectActionMoveCardDetail } from "../types/CardEffectActionMoveCardDetail";
 import { globalCache } from "./CauldronApi";
 import Choice from "./Choice";
+import FormSet from "./input/FormSet";
 import InputSelect from "./input/InputSelect";
 
 interface Props {
@@ -25,19 +25,16 @@ const CardEffectActionMoveCard: React.FC<Props> = ({ detail, onChanged }) => {
         getLabel={(v) => zoneNamesLabelsByValue[v]}
         onChanged={onChanged}
       />
-      <FormControl component="fieldset">
-        <FormLabel component="legend">移動するカードの選択条件</FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
-          <Choice
-            detail={detail.cardsChoice}
-            onChanged={(x) =>
-              onChanged({
-                cardsChoice: { ...detail.cardsChoice, ...x },
-              })
-            }
-          ></Choice>
-        </FormGroup>
-      </FormControl>
+      <FormSet label="移動するカードの選択条件">
+        <Choice
+          detail={detail.cardsChoice}
+          onChanged={(x) =>
+            onChanged({
+              cardsChoice: { ...detail.cardsChoice, ...x },
+            })
+          }
+        ></Choice>
+      </FormSet>
     </>
   );
 };

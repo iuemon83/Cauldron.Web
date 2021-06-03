@@ -1,6 +1,6 @@
-import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectActionDestroyCardDetail } from "../types/CardEffectActionDestroyCardDetail";
 import Choice from "./Choice";
+import FormSet from "./input/FormSet";
 
 interface Props {
   detail: CardEffectActionDestroyCardDetail;
@@ -13,19 +13,16 @@ const CardEffectActionDestroyCard: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">削除するカードの選択条件</FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
-          <Choice
-            detail={detail.choice}
-            onChanged={(x) =>
-              onChanged({
-                choice: { ...detail.choice, ...x },
-              })
-            }
-          ></Choice>
-        </FormGroup>
-      </FormControl>
+      <FormSet label="削除するカードの選択条件">
+        <Choice
+          detail={detail.choice}
+          onChanged={(x) =>
+            onChanged({
+              choice: { ...detail.choice, ...x },
+            })
+          }
+        ></Choice>
+      </FormSet>
     </>
   );
 };

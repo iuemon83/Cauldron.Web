@@ -1,7 +1,7 @@
-import { FormControl, FormLabel } from "@material-ui/core";
 import { ChoiceDetail } from "../types/ChoiceDetail";
 import { globalCache } from "./CauldronApi";
 import ChoiceSource from "./ChoiceSource";
+import FormSet from "./input/FormSet";
 import InputNumber from "./input/InputNumber";
 import InputSelect from "./input/InputSelect";
 
@@ -37,13 +37,12 @@ const Choice: React.FC<Props> = ({ detail, onChanged }) => {
         />
       </div>
       <div>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">選択候補</FormLabel>
+        <FormSet label="選択候補">
           <ChoiceSource
             detail={detail.source}
             onChanged={(e) => onChanged({ source: { ...detail.source, ...e } })}
           />
-        </FormControl>
+        </FormSet>
       </div>
     </>
   );

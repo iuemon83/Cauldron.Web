@@ -14,9 +14,10 @@ import InputSelect from "./input/InputSelect";
 
 import PlayerCondition from "./PlayerCondition";
 
-import { Button, FormControl, FormLabel, FormGroup } from "@material-ui/core";
+import { Button, FormGroup } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
+import FormSet from "./input/FormSet";
 
 interface Props {
   detail: ChoiceSourceDetail;
@@ -60,40 +61,45 @@ const ChoiceSource: React.FC<Props> = ({ detail, onChanged }) => {
     };
 
     return (
-      <FormControl component="fieldset">
-        <FormLabel component="legend">
-          プレイヤーの選択条件
-          <Button
-            variant="contained"
-            onClick={() => add()}
-            color="primary"
-            startIcon={<AddIcon />}
-          />
-          <Button variant="contained" onClick={() => clear()} color="secondary">
-            Clear
-          </Button>
-        </FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
-          {detail.orPlayerConditions.map((e, index) => (
-            <FormGroup key={index}>
-              <span>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => remove(index)}
-                  startIcon={<DeleteIcon />}
-                />
-              </span>
-              <PlayerCondition
-                detail={e}
-                onChanged={(x) =>
-                  onOrPlayerConditionsChanged({ ...e, ...x }, index)
-                }
-              ></PlayerCondition>
-            </FormGroup>
-          ))}
-        </FormGroup>
-      </FormControl>
+      <FormSet
+        label={
+          <>
+            プレイヤーの選択条件
+            <Button
+              variant="contained"
+              onClick={() => add()}
+              color="primary"
+              startIcon={<AddIcon />}
+            />
+            <Button
+              variant="contained"
+              onClick={() => clear()}
+              color="secondary"
+            >
+              Clear
+            </Button>
+          </>
+        }
+      >
+        {detail.orPlayerConditions.map((e, index) => (
+          <FormGroup key={index}>
+            <span>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => remove(index)}
+                startIcon={<DeleteIcon />}
+              />
+            </span>
+            <PlayerCondition
+              detail={e}
+              onChanged={(x) =>
+                onOrPlayerConditionsChanged({ ...e, ...x }, index)
+              }
+            ></PlayerCondition>
+          </FormGroup>
+        ))}
+      </FormSet>
     );
   };
 
@@ -128,40 +134,45 @@ const ChoiceSource: React.FC<Props> = ({ detail, onChanged }) => {
     };
 
     return (
-      <FormControl component="fieldset">
-        <FormLabel component="legend">
-          カードの選択条件
-          <Button
-            variant="contained"
-            onClick={() => add()}
-            color="primary"
-            startIcon={<AddIcon />}
-          />
-          <Button variant="contained" onClick={() => clear()} color="secondary">
-            Clear
-          </Button>
-        </FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
-          {detail.orCardConditions.map((e, index) => (
-            <FormGroup key={index}>
-              <span>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => remove(index)}
-                  startIcon={<DeleteIcon />}
-                />
-              </span>
-              <CardCondition
-                detail={e}
-                onChanged={(x) =>
-                  onOrCardConditionsChanged({ ...e, ...x }, index)
-                }
-              ></CardCondition>
-            </FormGroup>
-          ))}
-        </FormGroup>
-      </FormControl>
+      <FormSet
+        label={
+          <>
+            カードの選択条件
+            <Button
+              variant="contained"
+              onClick={() => add()}
+              color="primary"
+              startIcon={<AddIcon />}
+            />
+            <Button
+              variant="contained"
+              onClick={() => clear()}
+              color="secondary"
+            >
+              Clear
+            </Button>
+          </>
+        }
+      >
+        {detail.orCardConditions.map((e, index) => (
+          <FormGroup key={index}>
+            <span>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => remove(index)}
+                startIcon={<DeleteIcon />}
+              />
+            </span>
+            <CardCondition
+              detail={e}
+              onChanged={(x) =>
+                onOrCardConditionsChanged({ ...e, ...x }, index)
+              }
+            ></CardCondition>
+          </FormGroup>
+        ))}
+      </FormSet>
     );
   };
 

@@ -1,10 +1,11 @@
-import { Button, FormControl, FormGroup, FormLabel } from "@material-ui/core";
+import { Button, FormGroup } from "@material-ui/core";
 import { CardEffectActionAddEffectDetail } from "../types/CardEffectActionAddEffectDetail";
 import { CardEffectDetail, cardEffectEmpty } from "../types/CardEffectDetail";
 import CardEffect from "./CardEffect";
 import Choice from "./Choice";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
+import FormSet from "./input/FormSet";
 
 interface Props {
   detail: CardEffectActionAddEffectDetail;
@@ -40,44 +41,42 @@ const CardEffectActionAddEffect: React.FC<Props> = ({ detail, onChanged }) => {
 
   return (
     <>
-      <span>
-        <Button
-          variant="contained"
-          onClick={() => addCardEffect()}
-          color="primary"
-          startIcon={<AddIcon />}
-        />
-        <Button
-          variant="contained"
-          onClick={() => clearCardEffect()}
-          color="secondary"
-        >
-          Clear
-        </Button>
-      </span>
-      {detail.effectToAdd.map((e, index) => (
-        <FormControl
-          component="fieldset"
-          key={index}
-          style={{ marginLeft: "2rem" }}
-        >
-          <FormLabel component="legend">
+      <FormSet
+        label={
+          <>
             <Button
               variant="contained"
-              color="secondary"
-              onClick={() => removeCardEffect(index)}
-              startIcon={<DeleteIcon />}
+              onClick={() => addCardEffect()}
+              color="primary"
+              startIcon={<AddIcon />}
             />
-          </FormLabel>
-          <CardEffect
-            detail={e}
-            onChanged={(x) => onCardEffectChanged({ ...e, ...x }, index)}
-          ></CardEffect>
-        </FormControl>
-      ))}
-      <FormControl component="fieldset">
-        <FormLabel component="legend">効果を追加するカードの選択条件</FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
+            <Button
+              variant="contained"
+              onClick={() => clearCardEffect()}
+              color="secondary"
+            >
+              Clear
+            </Button>
+          </>
+        }
+      >
+        {detail.effectToAdd.map((e, index) => (
+          <FormGroup key={index}>
+            <span>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => removeCardEffect(index)}
+                startIcon={<DeleteIcon />}
+              />
+            </span>
+            <CardEffect
+              detail={e}
+              onChanged={(x) => onCardEffectChanged({ ...e, ...x }, index)}
+            ></CardEffect>
+          </FormGroup>
+        ))}
+        <FormSet label="効果を追加するカードの選択条件">
           <Choice
             detail={detail.cardsChoice}
             onChanged={(x) =>
@@ -86,8 +85,8 @@ const CardEffectActionAddEffect: React.FC<Props> = ({ detail, onChanged }) => {
               })
             }
           ></Choice>
-        </FormGroup>
-      </FormControl>
+        </FormSet>
+      </FormSet>
     </>
   );
 };

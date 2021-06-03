@@ -1,5 +1,5 @@
-import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectIfDetail } from "../types/CardEffectIfDetail";
+import FormSet from "./input/FormSet";
 import NumCondition from "./NumCondition";
 import NumValue from "./NumValue";
 
@@ -17,17 +17,14 @@ const CardEffectIf: React.FC<Props> = ({ detail, onChanged }) => {
           onChanged({ numCondition: { ...detail.numCondition, ...x } })
         }
       ></NumCondition>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">比較値</FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
-          <NumValue
-            detail={detail.numValue}
-            onChanged={(x) =>
-              onChanged({ numValue: { ...detail.numValue, ...x } })
-            }
-          ></NumValue>
-        </FormGroup>
-      </FormControl>
+      <FormSet label="比較値">
+        <NumValue
+          detail={detail.numValue}
+          onChanged={(x) =>
+            onChanged({ numValue: { ...detail.numValue, ...x } })
+          }
+        ></NumValue>
+      </FormSet>
     </>
   );
 };

@@ -7,9 +7,8 @@ import {
   Checkbox,
   Switch,
   FormGroup,
-  FormControl,
-  FormLabel,
 } from "@material-ui/core";
+import FormSet from "./input/FormSet";
 
 interface Props {
   detail: ZoneValueDetail;
@@ -38,26 +37,23 @@ const ZoneValue: React.FC<Props> = ({ detail, onChanged }) => {
 
   const pureValueInput = () => {
     return (
-      <>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">値</FormLabel>
-          <FormGroup row>
-            {zoneNames.map((e, index) => (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    value={index}
-                    checked={detail.pureValue.indexOf(e) !== -1}
-                    onChange={handleValueChange}
-                  />
-                }
-                label={zoneNamesLabelsByValue[e]}
-              />
-            ))}
-          </FormGroup>
-        </FormControl>
-      </>
+      <FormSet label="値">
+        <FormGroup row>
+          {zoneNames.map((e, index) => (
+            <FormControlLabel
+              key={index}
+              control={
+                <Checkbox
+                  value={index}
+                  checked={detail.pureValue.indexOf(e) !== -1}
+                  onChange={handleValueChange}
+                />
+              }
+              label={zoneNamesLabelsByValue[e]}
+            />
+          ))}
+        </FormGroup>
+      </FormSet>
     );
   };
 

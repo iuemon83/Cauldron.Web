@@ -1,7 +1,7 @@
-import { FormControl, FormGroup, FormLabel } from "@material-ui/core";
 import { CardEffectActionModifyCardDetail } from "../types/CardEffectActionModifyCardDetail";
 import { numValueModifierEmpty } from "../types/NumValueModifierDetail";
 import Choice from "./Choice";
+import FormSet from "./input/FormSet";
 import InputOption from "./input/InputOption";
 import NumValueModifier from "./NumValueModifier";
 
@@ -43,19 +43,16 @@ const CardEffectActionModifyCard: React.FC<Props> = ({ detail, onChanged }) => {
           <NumValueModifier detail={d!} onChanged={h}></NumValueModifier>
         )}
       />
-      <FormControl component="fieldset">
-        <FormLabel component="legend">対象の選択条件</FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
-          <Choice
-            detail={detail.choice}
-            onChanged={(x) =>
-              onChanged({
-                choice: { ...detail.choice, ...x },
-              })
-            }
-          ></Choice>
-        </FormGroup>
-      </FormControl>
+      <FormSet label="対象の選択条件">
+        <Choice
+          detail={detail.choice}
+          onChanged={(x) =>
+            onChanged({
+              choice: { ...detail.choice, ...x },
+            })
+          }
+        ></Choice>
+      </FormSet>
     </>
   );
 };

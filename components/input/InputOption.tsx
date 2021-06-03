@@ -1,10 +1,5 @@
-import {
-  FormControlLabel,
-  Checkbox,
-  FormControl,
-  FormLabel,
-  FormGroup,
-} from "@material-ui/core";
+import { FormControlLabel, Checkbox } from "@material-ui/core";
+import FormSet from "./FormSet";
 
 interface Props<K extends {}, T extends keyof K> {
   label: string;
@@ -12,7 +7,7 @@ interface Props<K extends {}, T extends keyof K> {
   keyName: T;
   empty: () => K[T];
   onChanged: (detail: Partial<K>) => void;
-  jtx: (d: K[T], h: (x: Partial<K[T]>) => void) => any;
+  jtx: (d: K[T], h: (x: Partial<K[T]>) => void) => React.ReactNode;
 }
 
 const InputOption = <K extends {}, T extends keyof K>({
@@ -40,24 +35,21 @@ const InputOption = <K extends {}, T extends keyof K>({
   };
 
   return (
-    <>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={detail[key] !== undefined}
-                onChange={handleHasChange}
-              />
-            }
-            label={label}
-          />
-        </FormLabel>
-        <FormGroup style={{ marginLeft: "2rem" }}>
-          {detail[key] !== undefined && jtx(detail[key], handleChangeChild)}
-        </FormGroup>
-      </FormControl>
-    </>
+    <FormSet
+      label={
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={detail[key] !== undefined}
+              onChange={handleHasChange}
+            />
+          }
+          label={label}
+        />
+      }
+    >
+      {detail[key] !== undefined && jtx(detail[key], handleChangeChild)}
+    </FormSet>
   );
 };
 
